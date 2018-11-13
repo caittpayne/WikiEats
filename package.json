@@ -1,0 +1,11 @@
+{
+  "name": "blocpedia",
+  "version": "1.0.0",
+  "description": "A Wikipedia-like application for users to post and collaborate on content",
+  "main": "\u001b[D\u001bsrc/server.js)",
+  "scripts": {
+    "test": "export NODE_ENV=test && \u001b[A\u001b[Bjasmine"
+  },
+  "author": "Cait Payne",
+  "license": "ISC"
+}
