@@ -2,7 +2,7 @@
   "name": "blocpedia",
   "version": "1.0.0",
   "description": "A Wikipedia-like application for users to post and collaborate on content",
-  "main": "\u001b[D\u001bsrc/server.js)",
+  "main": "\u001b[\u001b[C\u001bsrc/server.js)",
   "scripts": {
     "test": "SET NODE_ENV=test&& jasmine",
     "start": "node src/server.js"
