@@ -1,0 +1,42 @@
+html {
+    height: 100vh;
+}
+body {
+    padding-top: 54px;
+    height: 100vh;
+  }
+
+/* Navbar */
+.navbar {
+    background-color: white;
+}
+
+.navbar-brand {
+    font-family: 'Shadows Into Light Two', cursive;
+    color: #D43232;
+    font-size: 2rem;
+}
+
+/* Home Page Areas */
+.main {
+    padding: 130px 0px 80px 0px;
+    background: white; 
+}
+
+.search {
+    height: 100vh;
+    background: #251F1F;
+    color: white;
+}
+
+/* Components */
+
+.btn {
+    background: #D43232;
+    border-width: 0px;
+    width: 200px;
+    border-radius: 0px;
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+}
