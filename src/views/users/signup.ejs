@@ -2,8 +2,9 @@
 <html lang="en">
   <% include ../static/partials/head.ejs %>
   <body>
-    <% include ../static/partials/navbar.ejs %>
+        <% include ../static/partials/navbar.ejs %>
     <main class="container">
+        <% include ../static/partials/messages.ejs %>
       <section class="row align-items-center justify-content-center main">
         <section class="col-md-12 text-center align-self-center">
           <h4>Choose from one of our plans to start collaborating</h4>
@@ -79,7 +80,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <form method="POST" action="/user/signup">
+              <form method="POST" action="/users">
                 <div class="form-group">
                   <label>Name:</label>
                   <input

@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": null,
-    "database": "blocipedia",
+    "database": "wikieats",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "logging": false,
@@ -11,7 +11,7 @@
   "test": {
     "username": "postgres",
     "password": null,
-    "database": "blocipedia-test",
+    "database": "wikieats-test",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "logging": false,
