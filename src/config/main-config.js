@@ -23,7 +23,7 @@ module.exports = {
             secret: process.env.cookieSecret,
             resave: false,
             saveUninitialized: false,
-            cookie: { maxAge: 1.21+9 }
+            cookie: { maxAge: 1.21e+9 }
         }));
         app.use(flash());
         passportConfig.init(app);

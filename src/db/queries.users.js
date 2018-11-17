@@ -1,7 +1,6 @@
 const User = require('./models').User;
 const bcrypt = require('bcryptjs');
 const sgMail = require('@sendgrid/mail');
-const { Console } = require('console');
 
 module.exports = {
 
@@ -16,15 +15,14 @@ module.exports = {
         })
         .then((user) => {;
 
-            console.log(process.env.SENDGRID_API_KEY);
             sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
             const msg = {
                 to: newUser.email,
                 from: 'noreply@wikieats.com',
                 subject: 'Welcome to WikiEats!',
-                text: "We're happy you're on board!",
-                html: '<strong>Start creating, collaborating, and sharing your stories.</strong>',
+                text: "We're happy you're on board! Start creating, collaborating, and sharing your stories.",
+                html: '<strong>Please confirm your email</strong>',
               };
               
               sgMail.send(msg);
