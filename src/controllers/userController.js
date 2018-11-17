@@ -1,5 +1,6 @@
 const userQueries = require('../db/queries.users.js');
 const passport = require('passport');
+
 module.exports = {
 
     signup(req, res, next) {
@@ -22,8 +23,8 @@ module.exports = {
             } else {
                 
                 passport.authenticate('local')(req, res, () => {
-                    req.flash('notice', 'Welcome to WikiEats!'); 
-                    res.redirect('/')
+                    req.flash('notice', "Welcome to WikiEats! Start by creating a new Wiki.");
+                    res.redirect('/');
                 });
             }
         });

@@ -22,7 +22,7 @@ module.exports = {
                 }
 
                 return done(null, user);
-            });
+            })
         }));
 
         passport.serializeUser((user, callback) => {
