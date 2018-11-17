@@ -17,8 +17,9 @@ module.exports = {
         };
 
         userQueries.createUser(newUser, (err, user) => {
+            
             if(err) {
-                req.flash('error', err);
+                req.flash('email', 'That email address is already in use.');
                 res.redirect('/users/signup');
             } else {
                 
