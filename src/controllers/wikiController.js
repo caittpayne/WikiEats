@@ -17,6 +17,7 @@ module.exports = {
     },
 
     create(req, res, next) {
+        console.log('req user' + req.user.id);
         var isPrivate;
         
         if(!req.body.private || req.body.private == 'false') {
@@ -34,6 +35,7 @@ module.exports = {
 
         wikiQueries.addWiki(newWiki, (err, wiki) => {
             if(err) {
+                console.log('error' + err);
                 res.redirect(500, '/wikis/new');
             } else {
                 res.redirect(303, `/wikis/${wiki.id}`);
@@ -74,10 +76,9 @@ module.exports = {
       },
 
       destroy(req, res, next) {
-          console.log(req);
+          console.log('delete invoked');
         wikiQueries.deleteWiki(req, (err, wiki) => {
           if(err) {
-              console.log('error' + err);
             req.flash('notice', 'You are not authorized to do that.')
             res.redirect(`/wikis/${req.params.id}`)
           } else {

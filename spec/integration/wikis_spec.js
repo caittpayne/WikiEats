@@ -37,6 +37,28 @@ describe('routes : wikis', () => {
             });
         });         
     });
+    describe('User CRUD actions', () => {
+        beforeEach(done => {
+            User.create({
+                email: 'user@example.com',
+                password: '1234567',
+                name: 'John Doe'
+            }).then((user) => {
+                request.get(
+                    {
+                      url: 'http://localhost:3000/auth/fake',
+                      form: {
+                        userId: user.id,
+                        email: user.email
+                      }
+                    },
+                    (err, res, body) => {
+                      done();
+                    }
+                );
+            })
+          }); 
+
     describe('GET /wikis', () => {
         it('should return a status code 200 and a list of wikis', (done) => {
             request.get(base, (err, res, body) => {
@@ -63,8 +85,7 @@ describe('routes : wikis', () => {
                 form: {
                     title: 'This is a wiki',
                     body: 'I am a wiki',
-                    private: false,
-                    userId: 1
+                    private: false
                 }
             };
             request.post(options, (err, res, body) => {
@@ -86,15 +107,15 @@ describe('routes : wikis', () => {
         it('should render a view with the selected wiki', (done) => {
             request.get(`${base}${this.wiki.id}`, (err, res, body) => {
                 expect(err).toBeNull();
-                expect(body).toContain('I am a wiki');
+                expect(body).toContain('My first Wiki');
                 done();
             });
         });
     });
-  /*  describe('DELETE /wikis/:id/destroy', () => {
+    describe('DELETE /wikis/:id/destroy', () => {
         it('should delete the wiki with the associated ID', (done) => {
             expect(this.wiki.id).toBe(1);
-            request.delete(`${base}/wikis/${this.wiki.id}`, (err, res, body) => {
+            request.post(`${base}${this.wiki.id}/destroy`, (err, res, body) => {
                 Wiki.findById(1)
                 .then((wiki) => {
                     expect(err).toBeNull();
@@ -103,21 +124,21 @@ describe('routes : wikis', () => {
                 });
             });
         });
-    }); */
+    }); 
     describe('GET /wikis/:id/edit', () => {
         it('should render a view with an edit wiki form', (done) => {
             request.get(`${base}${this.wiki.id}/edit`, (err, res, body) => {
                 expect(err).toBeNull();
                 expect(body).toContain('Edit Wiki');
-                expect(body).toContain('My First Wiki');
+                expect(body).toContain('My first Wiki');
                 done();
             });
         });
     });
-  /*  describe('PUT /wikis/:id/update', () => {
+    describe('POST /wikis/:id/update', () => {
         it('should return a status code 302', (done) => {
-            request.put({
-                url: `${base}/wikis/${this.wiki.id}/update`,
+            request.post({
+                url: `${base}${this.wiki.id}/update`,
                 form: {
                     title: 'My first Wiki Test',
                     body: 'I love making wikis.'
@@ -129,22 +150,23 @@ describe('routes : wikis', () => {
         });
         it('should update the wiki with the given values', (done) => {
             const options = {
-                url: `${base}/wikis/${this.wiki.id}/update`,
+                url: `${base}${this.wiki.id}/update`,
                 form: {
                     title: 'My First Wiki Test',
-                    body: 'I lvoe making wikis.'
+                    body: 'I love making wikis.'
                 }
             };
-            request.put(options, (err, res, body) => {
+            request.post(options, (err, res, body) => {
                 expect(err).toBeNull();
                 Wiki.findOne({
                     where: {id: this.wiki.id}
                 })
                 .then((wiki) => {
-                    expect(post.title).toBe('My First Wiki Test');
+                    expect(wiki.title).toBe('My First Wiki Test');
                     done();
                 });
             });
         });
-    }); */
+    }); 
+});
 });
