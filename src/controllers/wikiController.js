@@ -49,7 +49,7 @@ module.exports = {
 
             let newWiki = {
                 title: req.body.title,
-                body: markdown.toHTML(req.body.body),
+                body: req.body.body,
                 private: isPrivate,
                 userId: req.user.id
             };
@@ -77,13 +77,13 @@ module.exports = {
                 const authorized = new Private(req.user, wiki).show();
 
                 if(authorized) {
-                    res.render('wikis/show', {wiki});
+                    res.render('wikis/show', {wiki, html: markdown.toHTML(wiki.body)});
                 } else {
                     req.flash('notice', 'You are not authorized to view this wiki');
                     res.redirect('/wikis');
                 }
             } else {
-                res.render('wikis/show', {wiki});
+                res.render('wikis/show', {wiki, html: markdown.toHTML(wiki.body)});
             }
           });
     },
