@@ -9,6 +9,7 @@ module.exports = {
             name = req.body.name || name;
 
             if(id && id != 0) {
+
                 req.user = {
                     'id': id,
                     'email': email,
@@ -16,6 +17,8 @@ module.exports = {
                     'name': name
 
                 };
+
+                console.log('middleweat' + req.user.email);
             } else if(id == 0) {
                 delete req.user;
             }

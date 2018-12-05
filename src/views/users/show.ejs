@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+      <% include ../static/partials/messages.ejs %>
+
+
+      <h3><%= `${user.name}'s Profile` %></h3>
+      <hr>
+      <div>
+        <h5><%= currentUser.role %> </h5>
+        <div>
+            <p>Upgrade</p>
+
+            <% if(currentUser.role === 'premium') { %>
+            <div>
+                    <form style="display:initial" action="/users/<%= currentUser.id %>/downgrade" method="post">
+                        <button type="submit" class="btn btn-danger">Downgrade</button>
+                    </form>
+            </div>
+            <% } %>
+            <% if(currentUser.role === 'standard') { %>
+                <div>
+                    <form action='/users/<%= currentUser.id %>/upgrade' method='post'>
+                        <% include ./partials/upgrade.ejs %>
+                        <input type='hidden' name='chargeAmount' value='1500'>
+                    </form>
+                </div>
+            <% } %>
+        </div>
+      </div>
+      <div>
+            <h5>Latest Wikis</h5>
+            <ul class="list-unstyled">
+              <% if(wikis) { %>
+                <% wikis.forEach((wiki) => { %>
+                  <li>
+                    <a href="/wikis/<%= wiki.id %>">
+                      <%= wiki.title %>
+                    </a>
+                  </li>
+                <% }) %>
+              <% } %>
+            </ul>
+      </div>
+      <div>
+          <h5>Collaborations</h5>
+      </div>
+ 
+      <hr>
+
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>

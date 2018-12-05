@@ -1,6 +1,7 @@
 const User = require('./models').User;
 const bcrypt = require('bcryptjs');
 const sgMail = require('@sendgrid/mail');
+const Wiki = require('./models').Wiki;
 
 module.exports = {
 
@@ -8,12 +9,14 @@ module.exports = {
         const salt = bcrypt.genSaltSync();
         const hashedPassword = bcrypt.hashSync(newUser.password, salt);
 
+    
         return User.create({
             email: newUser.email,
             password: hashedPassword,
-            name: newUser.name
+            name: newUser.name,
+            role: (newUser.role === 'premium') ? 'premium' : 'standard'
         })
-        .then((user) => {;
+        .then((user) => {
 
             sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -34,13 +37,81 @@ module.exports = {
         })
     },
 
-    getUser(id, callback) {
-        return User.findById(id)
+    upgradeUser(req, callback) {
+       return User.findById(req.params.id)
+          .then((user) => {
+    
+            if(!user) {
+              return callback('User not found');
+            } else {
+
+                  user.role = 'premium';
+                  user.save()
+                  .then(() => {
+                    callback(null, user);
+                  })
+                  .catch((err) => {
+                    callback(err);
+                  });
+            }
+            
+        });
+    },
+
+    downgradeUser(req, callback) {
+        User.findById(req.params.id, {
+                include: [
+                    {model: Wiki, as: 'wikis'}
+                ]
+        })
         .then((user) => {
-            callback(null, user);
+            if(!user) {
+                callback('User not found');
+            } else {
+                user.role = 'standard';
+                user.save()
+                .then(() => {
+                    Wiki.findAll({where: {userId: user.id}})
+                    .then((wikis) => {
+                        wikis.forEach((wiki) => {
+                                wiki.private = false
+                                wiki.save()
+                                .then((wiki) => {
+                                    callback(null, wiki)
+                                })
+                                .catch((err) => {
+                                    callback(err);
+                                })   
+                        });
+                    })
+                    .catch((err) => {
+                        callback(err);
+                    })
+                })
+                .catch((err) => {
+                    console.log(err);
+                    callback(err);
+                });
+            }
         })
-        .catch((err) => {
-            callback(err);
-        })
-    }
+    },
+
+    getUser(id, callback) {
+        let result = [];
+        User.findById(id)
+        .then((user) => {
+            if(!user) {
+                callback(404);
+            } else {
+                result['user'] = user;
+    
+                Wiki.scope({method: ['lastFiveFor', id]}).all()
+                .then((wikis) => {
+                    result['wikis'] = wikis;
+
+                    callback(null, result);
+                })
+            }
+        });
+      },
 }

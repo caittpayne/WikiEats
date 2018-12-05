@@ -2,6 +2,7 @@ const request = require('request');
 const server = require('../../src/server');
 const base = 'http://localhost:3000/users/';
 const User = require('../../src/db/models').User;
+const Wiki = require('../../src/db/models').Wiki;
 const sequelize = require('../../src/db/models/index').sequelize;
 
 describe('routes : users', () => {
@@ -99,5 +100,81 @@ describe('routes : users', () => {
             });
         });
     });
+
+    // NEED TO UPDATE
+
+    /*
     
+    describe('GET /users/:id', () => {
+        beforeEach((done) => {
+            this.user;
+            this.wiki;
+  
+            User.create({
+                email: "sansa.stark@got.com",
+                password: "12345678910",
+                role: 'standard',
+                name: "Sansa Stark"
+              })
+              .then((res) => {
+
+                this.user = res;
+
+                request.get(
+                    {
+                      url: 'http://localhost:3000/auth/fake',
+                      form: {
+                        id: this.user.id,
+                        role: 'standard',
+                        email: 'sansa.stark@got.com',
+                        name: 'Sansa Stark'
+                      }
+                    },
+                    (err, res, body) => {
+                      done();
+                    }
+                  )
+                  .then(() =>{
+
+                    Wiki.create({
+                        title: "My first Wiki",
+                        body: "This is so cool",
+                        private: false,
+                        userId: this.user.id
+                      })
+                      .then((res) => {
+                        this.wiki = res;
+                        done();
+                      });
+                  });
+              });
+        });
+        it('should present a list of wikis a user has created', (done) => {
+                request.get(`${base}${this.user.id}`, (err, res, body) => {
+                    expect(body).toContain('My first Wiki');
+                    expect(body).toContain(this.user.name);
+                    done();
+                });    
+       });
+           // Downgrade, Upgrade
+    describe('POST /users/:id/upgrade', () => {
+        it('should upgrade the users account to premium', (done) => {
+            request.get(`${base}${this.user.id}/upgrade`, (err, res, body) => {
+                expect(err).toBeNull();
+                expect(this.user.role).toBe('premium');
+                done();
+            });
+        });
+    });
+    describe('POST /users/:id/downgrade', () => {
+        it('should downgrade the users account to premium', (done) => {
+            request.get(`${base}${this.user.id}/downgrade`, (err, res, body) => {
+                expect(err).toBeNull();
+                expect(this.user.role).toBe('standard');
+            })
+        })
+    })
+    });
+
+    */
 });

@@ -31,6 +31,85 @@ module.exports = {
         });
     },
 
+    createPremiumUser(req, res, next) {
+        const stripe = require("stripe")(process.env.STRIPE_API_SECRET);
+        const token = req.body.stripeToken;
+        const charge = stripe.charges.create({
+            amount: 1500,
+            currency: 'usd',
+            description: `Account charge for ${req.body.name}`,
+            source: token
+        }, (err, charge) => {
+            if(err && err.type === 'StripeCardError') {
+                req.flash('notice', 'You payment could not be processed.');
+                console.log('Your payment could not be processed');
+            } else {
+                
+               let newUser = {
+                email: req.body.email,
+                password: req.body.password,
+                passwordConfirmation: req.body.passwordConfirmation,
+                name: req.body.name,
+                role: 'premium'
+                };
+
+                userQueries.createUser(newUser, (err, user) => {
+            
+                    if(err) {
+                        req.flash('email', 'That email address is already in use.');
+                        res.redirect('/users/signup');
+                    } else {
+                        
+                        passport.authenticate('local')(req, res, () => {
+                            req.flash('notice', "Welcome to WikiEats! Start by creating a new Wiki.");
+                            res.redirect('/');
+                        });
+                    }
+                });
+
+            }
+        });
+    },
+
+    upgrade(req, res, next) {
+        const stripe = require("stripe")(process.env.STRIPE_API_SECRET);
+        const token = req.body.stripeToken;
+        const chargeAmount = req.body.chargeAmount;
+        const charge = stripe.charges.create({
+            amount: chargeAmount,
+            currency: 'usd',
+            description: 'Premium account charge',
+            source: token
+        }, (err, charge) => {
+            if(err && err.type === 'StripeCardError') {
+                req.flash('notice', 'You payment could not be processed.');
+                console.log('Your payment could not be processed');
+            } else {
+                
+                userQueries.upgradeUser(req, (err, user) => {
+                    if(err || user == null) {
+                      res.redirect(401, '/');
+                    } else {
+                        req.flash('notice', 'Your account has been upgraded! You will receive a confirmation email shortly.')
+                        res.redirect(`/users/${req.params.id}`);
+                    }
+                  });
+            }
+        });
+      },
+
+      downgrade(req, res, next) {
+        userQueries.downgradeUser(req, (err, user) => {
+          if(err || user == null) {
+              console.log(err);
+            res.redirect(err, '/');
+          } else {
+              req.flash('notice','Your account has been downgraded');
+              res.redirect(`/users/${req.params.id}`);
+          }
+        });
+      },
+
     signInForm(req, res, next) {
         res.render('users/signin');
     },
@@ -51,5 +130,19 @@ module.exports = {
         req.logout();
         req.flash('notice', "You've successfully signed out");
         res.redirect('/');
+    },
+
+    show(req, res, next) {
+        userQueries.getUser(req.params.id, (err, result) => {
+  
+          if(err || result.user === undefined) {
+              
+              req.flash('notice', 'No user found with the ID');
+              res.redirect('/');
+          } else {
+              console.log('controller user' + result.user.name);
+              res.render('users/show', {...result});
+          }
+        });
     }
 }
