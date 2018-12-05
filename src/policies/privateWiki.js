@@ -3,7 +3,7 @@ const ApplicationPolicy = require('./application');
 module.exports = class PrivateWikiPolicy extends ApplicationPolicy {
     
     new() {
-        return this._isPremium || this._isAdmin();
+        return this._isPremium() || this._isAdmin();
     }
 
     show() {

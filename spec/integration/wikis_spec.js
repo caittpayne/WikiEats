@@ -432,13 +432,13 @@ describe("routes : wikis", () => {
       });
     });
     describe("POST /wikis/create", () => {
-      it("should create a public wiki and redirect", done => {
+      it("should create a private wiki and redirect", done => {
         const options = {
           url: `${base}create`,
           form: {
             title: "This is a wiki",
             body: "I am a wiki",
-            private: false
+            private: true
           }
         };
         request.post(options, (err, res, body) => {
@@ -461,7 +461,7 @@ describe("routes : wikis", () => {
           form: {
             title: "a",
             body: "b",
-            private: false
+            private: true
           }
         };
         request.post(options, (err, res, body) => {

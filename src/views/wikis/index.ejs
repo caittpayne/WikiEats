@@ -14,6 +14,16 @@
       <% } %>
       <ul class="list-group">
 
+        <% if(currentUser) { %>
+        <% wikis.forEach((wiki) => { %>
+            <% if(wiki.private === false || wiki.userId === currentUser.id) { %>
+          <li class="list-group-item">
+            <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+          </li>
+          <% } %>
+        <% }) %>
+      </ul>
+      <% } else { %>
         <% wikis.forEach((wiki) => { %>
             <% if(wiki.private === false) { %>
           <li class="list-group-item">
@@ -22,6 +32,7 @@
           <% } %>
         <% }) %>
       </ul>
+      <% } %>
 
     </main>
     <% include ../static/partials/baseScripts.ejs %>
