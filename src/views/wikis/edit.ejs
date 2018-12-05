@@ -23,7 +23,11 @@
         <% if(currentUser) { %>
             <% if(currentUser.id === wiki.userId && (currentUser.isAdmin() || currentUser.isPremium())) { %>
         <div class="form-check">
-            <input class="form-check-input" name="private" type="checkbox" value="true" id="privateWiki">
+            <% if(wiki.private == true) { %>
+            <input class="form-check-input" checked='checked' name="private" type="checkbox" value="true" id="privateWiki">
+            <% } else { %>
+                <input class="form-check-input" name="private" type="checkbox" value="true" id="privateWiki">
+                <% } %>
             <label class="form-check-label" for="privateWiki">
               Private Wiki
             </label>

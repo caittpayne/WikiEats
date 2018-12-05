@@ -92,9 +92,9 @@ module.exports = {
             var authorized;
   
             if(wiki.private == true) {
-              authorized = new Private(req.user).edit();
+              authorized = new Private(req.user, wiki).edit();
             } else {
-                authorized = new Public(req.user).edit();
+                authorized = new Public(req.user, wiki).edit();
             }
   
             if(authorized) {

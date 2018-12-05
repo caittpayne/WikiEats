@@ -103,7 +103,6 @@ describe('routes : users', () => {
 
     // NEED TO UPDATE
 
-    /*
     
     describe('GET /users/:id', () => {
         beforeEach((done) => {
@@ -176,5 +175,5 @@ describe('routes : users', () => {
     })
     });
 
-    */
+    
 });
