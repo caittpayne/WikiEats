@@ -1,6 +1,8 @@
 const wikiQueries = require('../db/queries.wikis.js');
 const Private = require('../policies/privateWiki.js');
 const Public = require('../policies/application.js');
+const markdown = require('markdown').markdown;
+
 
 module.exports = {
 
@@ -47,7 +49,7 @@ module.exports = {
 
             let newWiki = {
                 title: req.body.title,
-                body: req.body.body,
+                body: markdown.toHTML(req.body.body),
                 private: isPrivate,
                 userId: req.user.id
             };
@@ -99,7 +101,6 @@ module.exports = {
   
             if(authorized) {
               wikiQueries.getWiki(req.params.id, (err, wiki) => {
-                  console.log('wiki anme ' + wiki.name);
                   if(err || wiki == null) {
                     res.redirect(404, `/wikis`);
                   } else {
