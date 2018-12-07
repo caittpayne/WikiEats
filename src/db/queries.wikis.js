@@ -111,20 +111,24 @@ module.exports = {
                 }
             })
             .then((wikis) => {
-                var allWikis = 0;
-                wikis.forEach((wiki) => {
-                    wiki.private = false
-                    wiki.save()
-                    .then((wiki) => {
-                        allWikis++;
-                        if(allWikis === wikis.length) {
-                            callback(null, wiki);
-                        }
+                if(wikis) {
+                    var allWikis = 0;
+                    wikis.forEach((wiki) => {
+                        wiki.private = false
+                        wiki.save()
+                        .then((wiki) => {
+                            allWikis++;
+                            if(allWikis === wikis.length) {
+                                callback(null, wiki);
+                            }
+                        })
+                        .catch((err) => {
+                            callback(err);
+                        })
                     })
-                    .catch((err) => {
-                        callback(err);
-                    })
-                })
+                }
+
+                callback(null, null);
             })
             .catch((err) => {
                 callback(err);

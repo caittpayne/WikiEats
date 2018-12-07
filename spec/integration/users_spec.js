@@ -4,7 +4,6 @@ const base = "http://localhost:3000/users/";
 const User = require("../../src/db/models").User;
 const Wiki = require("../../src/db/models").Wiki;
 const sequelize = require("../../src/db/models/index").sequelize;
-const mockStripe = require('../support/mock-stripe.js').fakeIt; 
 
 describe("routes : users", () => {
   beforeEach(done => {
@@ -162,19 +161,10 @@ describe("routes : users", () => {
     });
 
     describe("POST /users/:id/upgrade", () => {
-      it("should upgrade the users account to premium", done => {
+      it("should not upgrade the users account to premium without Stripe payment", done => {
         request.get(`${base}${this.user.id}/upgrade`, (err, res, body) => {
-            
-          User.findOne({ where: { email: "sansa.stark@got.com" } })
-            .then(user => {
-              expect(err).toBeNull();
-              expect(this.user.role).toBe("premium");
-              done();
-            })
-            .catch(err => {
-              console.log(err);
-              done();
-            });
+            expect(this.user.role).toBe('standard');
+            done();
         });
       });
     });
