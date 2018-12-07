@@ -21,9 +21,42 @@
 
             <% if(user.role === 'premium') { %>
             <div>
-                    <form style="display:initial" action="/users/<%= user.id %>/downgrade" method="post">
-                        <button type="submit" class="btn btn-danger">Downgrade</button>
-                    </form>
+                    <button
+                    class="btn btn-md"
+                    data-toggle="modal"
+                    data-target="#confirmDowngrade"
+                >
+                Downgrade
+                </button>
+
+                    <div
+                    class="modal fade"
+                    id="confirmDowngrade"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalCenterTitle"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                                <form style="display:initial" action="/users/<%= user.id %>/downgrade" method="post">
+                                    <button type="submit" class="btn btn-danger">OK</button>
+                                </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
             </div>
             <% } %>
             <% if(user.role === 'standard') { %>
