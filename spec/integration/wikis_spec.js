@@ -385,6 +385,14 @@ describe("routes : wikis", () => {
         });
       });
     });
+    describe('GET /wikis/:id/collaborators', () => {
+        it('should not render a view to add collaborators', (done) => {
+            request.get(`${base}${this.wiki.id}/collaborators`, (err, res, body) => {
+                expect(body).not.toContain("Add Collaborators");
+                done();
+            });
+        });
+    });
   });
 
   // Premium User

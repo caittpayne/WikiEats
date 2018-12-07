@@ -13,9 +13,10 @@
             </h1>
         </div>
         <% if(currentUser) { %>
-            <% include ./collaborators.js %>
         <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-primary">Edit</a>
-        <a href="/wikis/<%= wiki.id %>" class="btn btn-primary btn-md" data-toggle="modal" data-target="#addCollaborators">Add Collaborators</a>
+        <% if(wiki.private === true) { %>
+        <a href="/wikis/<%= wiki.id %>/collaborators" class="btn btn-primary btn-md">Add Collaborators</a>
+        <% } %>
         <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>

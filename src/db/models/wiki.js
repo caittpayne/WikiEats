@@ -27,6 +27,11 @@ module.exports = (sequelize, DataTypes) => {
     });
     
   };
+  
+  Wiki.hasMany(models.Collaborator, {
+    foreignKey: 'wikiId',
+    as: 'collaborators'
+  });
 
   Wiki.addScope('lastFiveFor', (userId) => {
     return {
