@@ -15,20 +15,20 @@
       <h3><%= `${user.name}'s Profile` %></h3>
       <hr>
       <div>
-        <h5><%= currentUser.role %> </h5>
+        <h5><%= user.role %> </h5>
         <div>
             <p>Upgrade</p>
 
-            <% if(currentUser.role === 'premium') { %>
+            <% if(user.role === 'premium') { %>
             <div>
-                    <form style="display:initial" action="/users/<%= currentUser.id %>/downgrade" method="post">
+                    <form style="display:initial" action="/users/<%= user.id %>/downgrade" method="post">
                         <button type="submit" class="btn btn-danger">Downgrade</button>
                     </form>
             </div>
             <% } %>
-            <% if(currentUser.role === 'standard') { %>
+            <% if(user.role === 'standard') { %>
                 <div>
-                    <form action='/users/<%= currentUser.id %>/upgrade' method='post'>
+                    <form action='/users/<%= user.id %>/upgrade' method='post'>
                         <% include ./partials/upgrade.ejs %>
                         <input type='hidden' name='chargeAmount' value='1500'>
                     </form>

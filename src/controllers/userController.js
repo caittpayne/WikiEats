@@ -83,7 +83,7 @@ module.exports = {
             source: token
         }, (err, charge) => {
             if(err && err.type === 'StripeCardError') {
-                req.flash('notice', 'You payment could not be processed.');
+                req.flash('notice', 'Your payment could not be processed.');
                 console.log('Your payment could not be processed');
             } else {
                 

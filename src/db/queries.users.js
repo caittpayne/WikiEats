@@ -18,7 +18,7 @@ module.exports = {
         })
         .then((user) => {
 
-            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+          /*  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
             const msg = {
                 to: newUser.email,
@@ -28,7 +28,7 @@ module.exports = {
                 html: '<strong>Please confirm your email</strong>',
               };
               
-              sgMail.send(msg);
+              sgMail.send(msg); */
 
               callback(null, user)
         })
