@@ -99,5 +99,36 @@ module.exports = {
                 callback('Forbidden');
             } 
         });
-      }
-}
+      },
+
+
+    downgradeWikis(userId, callback) {
+        Wiki.findAll({
+            where: 
+                {
+                    userId: userId,
+                    private: true
+                }
+            })
+            .then((wikis) => {
+                var allWikis = 0;
+                wikis.forEach((wiki) => {
+                    wiki.private = false
+                    wiki.save()
+                    .then((wiki) => {
+                        allWikis++;
+                        if(allWikis === wikis.length) {
+                            callback(null, wiki);
+                        }
+                    })
+                    .catch((err) => {
+                        callback(err);
+                    })
+                })
+            })
+            .catch((err) => {
+                callback(err);
+            })
+        },
+
+    }

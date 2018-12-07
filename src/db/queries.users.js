@@ -58,41 +58,25 @@ module.exports = {
         });
     },
 
+
     downgradeUser(req, callback) {
-        User.findById(req.params.id, {
-                include: [
-                    {model: Wiki, as: 'wikis'}
-                ]
-        })
+        User.findById(req.params.id)
         .then((user) => {
             if(!user) {
                 callback('User not found');
             } else {
                 user.role = 'standard';
                 user.save()
-                .then(() => {
-                    Wiki.findAll({where: {userId: user.id}})
-                    .then((wikis) => {
-                        wikis.forEach((wiki) => {
-                                wiki.private = false
-                                wiki.save()
-                                .then((wiki) => {
-                                    callback(null, wiki)
-                                })
-                                .catch((err) => {
-                                    callback(err);
-                                })   
-                        });
-                    })
-                    .catch((err) => {
-                        callback(err);
-                    })
+                .then((user) => {
+                    callback(null, user);
                 })
                 .catch((err) => {
-                    console.log(err);
                     callback(err);
-                });
+                })
             }
+        })
+        .catch((err) => {
+            callback(err);
         })
     },
 
