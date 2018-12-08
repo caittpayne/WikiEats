@@ -14,9 +14,6 @@
         </div>
         <% if(currentUser) { %>
         <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-primary">Edit</a>
-        <% if(wiki.private === true) { %>
-        <a href="/wikis/<%= wiki.id %>/collaborators" class="btn btn-primary btn-md">Add Collaborators</a>
-        <% } %>
         <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>
@@ -24,6 +21,17 @@
         <p>
             <%- html %>
         </p>
+        <div>
+                <% if(wiki.collaborators) { %>
+                    <% wiki.collaborators.forEach((collaborator) => { %>
+                    <%- include("../collaborators/show.ejs", {collaborator}) %>
+                    <% }) %>
+                    <% } %>
+
+                    <% if(wiki.private === true) { %>
+                        <a href="/wikis/<%= wiki.id %>/collaborators/edit" class="btn btn-primary btn-md">Add Collaborators</a>
+                        <% } %>
+        </div>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>

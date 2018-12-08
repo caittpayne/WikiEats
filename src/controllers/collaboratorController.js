@@ -1,4 +1,5 @@
 const collaboratorQueries = require('../db/queries.collaborators.js');
+const userQueries = require('../db/queries.users.js');
 const Authorizer = require('../policies/collaborator.js');
 
 module.exports = {
@@ -33,5 +34,16 @@ module.exports = {
                 res.redirect(req.headers.referer);
             }
         });
-    }
+    },
+
+    edit(req, res, next) {
+        userQueries.getAllUsers((err, results) => {
+            if(err || results.length < 1) {
+                req.flash('notice', 'No users');
+                res.redirect(req.headers.referer);
+            } else {
+                res.render('collaborators/edit', {...results});
+            }
+        })
+    },
 }

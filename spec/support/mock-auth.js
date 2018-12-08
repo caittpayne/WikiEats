@@ -17,8 +17,6 @@ module.exports = {
                     'name': name
 
                 };
-
-                console.log('middleweat' + req.user.email);
             } else if(id == 0) {
                 delete req.user;
             }

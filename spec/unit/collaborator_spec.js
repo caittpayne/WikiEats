@@ -1,7 +1,6 @@
-
-const sequelize = require("../../src/db/models/index").sequelize;
-const Wiki = require("../../src/db/models").Wiki;
-const User = require("../../src/db/models").User;
+const sequelize = require('../../src/db/models/index').sequelize;
+const User = require('../../src/db/models').User;
+const Wiki = require('../../src/db/models').Wiki;
 const Collaborator = require("../../src/db/models").Collaborator;
 
 describe("Collaborator", () => {
@@ -33,7 +32,7 @@ describe("Collaborator", () => {
 
           Collaborator.create({
             userId: this.user.id,
-            postId: this.post.id,
+            wikiId: this.wiki.id,
             name: this.user.name
           })
           .then((collaborator) => {
@@ -51,7 +50,7 @@ describe("Collaborator", () => {
         });
       });
     });
-  });
+  }); 
   describe("#create()", () => {
 
     it("should create a collaborator object with a userId, wikiId and user name", (done) => {
@@ -82,7 +81,6 @@ describe("Collaborator", () => {
 
       })
       .catch((err) => {
-
         expect(err.message).toContain("Collaborator.wikiId cannot be null");
         expect(err.message).toContain("Collaborator.name cannot be null");
         done();
@@ -97,7 +95,9 @@ describe("Collaborator", () => {
 
       User.create({               
         email: "bob@example.com",
-        password: "password"
+        password: "password",
+        role: 'premium',
+        name: 'Bob'
       })
       .then((newUser) => {       
 
@@ -141,7 +141,7 @@ describe("Collaborator", () => {
 
         expect(this.collaborator.wikiId).toBe(this.wiki.id); 
 
-        this.collaboartor.setWiki(newWiki)                 
+        this.collaborator.setWiki(newWiki)                 
         .then((collaborator) => {
 
           expect(collaborator.wikiId).toBe(newWiki.id);      
@@ -158,11 +158,11 @@ describe("Collaborator", () => {
 
       this.collaborator.getWiki()
       .then((associatedWiki) => {
-        expect(associatedWiki.title).toBe("My first visit to Proxima Centauri b");
+        expect(associatedWiki.title).toBe("Expeditions to Alpha Centauri");
         done();
       });
 
     });
 
-  });
+  }); 
 });

@@ -151,9 +151,8 @@ module.exports = {
               req.flash('notice', 'No user found with the ID');
               res.redirect('/');
           } else {
-              console.log('controller user' + result.user.name);
               res.render('users/show', {...result});
           }
         });
-    }
+    },
 }

@@ -98,4 +98,15 @@ module.exports = {
             }
         });
       },
+
+      
+    getAllUsers(callback) {
+        User.all()
+        .then((users) => {
+            callback(users);
+        })
+        .catch((err) => {
+            callback(err);
+        })
+    }
 }
