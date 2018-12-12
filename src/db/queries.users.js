@@ -103,10 +103,20 @@ module.exports = {
     getAllUsers(callback) {
         User.all()
         .then((users) => {
-            callback(users);
+            callback(null, users);
         })
         .catch((err) => {
             callback(err);
         })
-    }
+    },
+
+    getCollabUser(email, callback) {
+        User.findOne({where: {email: email}})
+        .then((user) => {
+            callback(null, user);
+        })
+        .catch((err) => {
+            callback(err);
+        });
+    },
 }

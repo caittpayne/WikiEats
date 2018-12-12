@@ -4,8 +4,7 @@ const router = express.Router();
 const collaboratorController = require('../controllers/collaboratorController');
 const helper = require('../auth/helpers');
 
-router.get('/wikis/:id/collaborators/edit', collaboratorController.edit);
 router.post('/wikis/:id/collaborators/create', collaboratorController.create);
-router.post('/wikis/:id/collaborators/destroy', collaboratorController.destroy);
+router.post('/wikis/:id/collaborators/:id/destroy', collaboratorController.destroy);
 
 module.exports = router;

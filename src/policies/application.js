@@ -19,6 +19,9 @@ module.exports = class ApplicationPolicy {
         return this.user && this.user.role == 'premium';
     }
 
+    _isCollaborator() {
+    }
+
     new() {
         return this.user != null;
     }

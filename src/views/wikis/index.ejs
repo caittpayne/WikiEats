@@ -16,7 +16,7 @@
 
         <% if(currentUser) { %>
         <% wikis.forEach((wiki) => { %>
-            <% if(wiki.private === false || wiki.userId === currentUser.id) { %>
+            <% if(wiki.private === false || currentUser.isOwner(currentUser, wiki) || currentUser.isCollaborator(currentUser, wiki)) { %>
           <li class="list-group-item">
             <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
           </li>

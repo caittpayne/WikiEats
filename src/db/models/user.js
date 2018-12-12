@@ -43,8 +43,23 @@ module.exports = (sequelize, DataTypes) => {
       return this.role === 'premium'
   }
 
-  User.prototype.isOwner = function() {
-      return this.role === 'premium'
+  User.prototype.isOwner = function(user, record) {
+
+        return record.userId == user.id;  
+  }
+
+  User.prototype.isCollaborator = function(user, record) {
+      let temp = 0;
+      record.collaborators.forEach((collab) => {
+
+        if(collab.userId == user.id) {
+            temp++;
+        }
+
+      });
+
+      return temp > 0;
+
   }
 
   return User;

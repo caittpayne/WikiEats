@@ -8,18 +8,36 @@ module.exports = {
         const authorized = new Authorizer(req.user).create();
 
         if(authorized) {
-            let newCollaborator = {
-                userId: req.user.id,
-                postId: req.params.wikiId,
-                name: req.user.name
-            };
-
-            collaboratorQueries.createCollaborator(newCollaborator, (err, collaborator) => {
-                if(err) {
-                    req.flash('error', err)
-                }
+            if(req.body.email != req.user.email) {
+                userQueries.getCollabUser(req.body.email, (err, user) => {
+                    if(err || !user) {
+                        req.flash('User not found');
+                        res.redirect(req.headers.referer);
+                    } else {
+    
+                        let newCollaborator = {
+                            userId: user.id,
+                            wikiId: req.params.id,
+                            name: user.name
+                        };
+    
+                        collaboratorQueries.createCollaborator(newCollaborator, (err, collaborator) => {
+                            if(err) {
+                                req.flash('notice', 'User is already a collaborator')
+                                res.redirect(req.headers.referer);
+                            }
+                            else {
+                                res.redirect(req.headers.referer);
+                            }
+                        });
+                    }
+                })
+            } else {
+                req.flash('notice', 'You cannot add yourself as a collaborator');
                 res.redirect(req.headers.referer);
-            });
+            }
+       
+
         } else {
             req.flash('notice', 'You must be signed in to do that.');
             res.redirect('/users/sign_in');
@@ -34,16 +52,5 @@ module.exports = {
                 res.redirect(req.headers.referer);
             }
         });
-    },
-
-    edit(req, res, next) {
-        userQueries.getAllUsers((err, results) => {
-            if(err || results.length < 1) {
-                req.flash('notice', 'No users');
-                res.redirect(req.headers.referer);
-            } else {
-                res.render('collaborators/edit', {...results});
-            }
-        })
     },
 }
