@@ -29,9 +29,13 @@ module.exports = {
             }]
           })
           .then((wiki) => {
+
+            console.log('queries ' + wiki.title)
               callback(null, wiki);
           })
           .catch((err) => {
+
+            console.log('error' + err);
               callback(err);
           })
     },

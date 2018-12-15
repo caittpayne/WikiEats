@@ -91,13 +91,13 @@ module.exports = {
     
     edit(req, res, next) {
         wikiQueries.getWiki(req.params.id, (err, wiki) => {
-console.log('user ' + req.user);
+
             if(req.user) {
                 var authorized;
                 if(wiki.private == true) {
                   authorized = new Private(req.user, wiki).edit(req.user, wiki);
                 } else {
-                    authorized = new Public(req.user, wiki).edit(req,user, wiki);
+                  authorized = new Public(req.user, wiki).edit(req.user, wiki);
                 }
       
                 if(authorized) {

@@ -396,7 +396,7 @@ describe("routes : wikis", () => {
         });
     });
   });
-/*
+
 
   // Premium User
   describe("Premium user CRUD actions", () => {
@@ -650,8 +650,7 @@ describe("routes : wikis", () => {
         });
       });
     });
-  });
-
+  }); 
   // Admin User
   describe("Admin user CRUD actions", () => {
     beforeEach(done => {
@@ -813,22 +812,23 @@ describe("routes : wikis", () => {
       });
     });
     describe("Admin user attempting CRUD actions on Private Wikis", () => {
-      beforeEach(done => {
-        Wiki.create({
-          title: "I am a private wiki",
-          body: "You cannot edit me",
-          private: true,
-          userId: 1
-        })
-          .then(wiki => {
-            this.wiki = wiki;
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-          });
-      });
+        beforeEach(done => {
+                Wiki.create({
+                    title: "CRUD Private Wiki",
+                    body: "This is so cool",
+                    private: true,
+                    userId: this.user.id
+                  }).then(wiki => {
+        
+                    this.wiki = wiki;
+                    done();
+        
+                })
+                .catch((err) => {
+                    console.log(err);
+                    done();
+             })
+    });
       describe("POST /wikis/create", () => {
         it("should create a private wiki", done => {
           const options = {
@@ -836,7 +836,8 @@ describe("routes : wikis", () => {
             form: {
               title: "Trying to create private wiki",
               body: "can i do it?",
-              private: true
+              private: true,
+              userId: this.user.id
             }
           };
           request.post(options, (err, res, body) => {
@@ -855,11 +856,11 @@ describe("routes : wikis", () => {
       describe("GET /wikis/:id", () => {
         it("should render a view with the private wiki", done => {
           request.get(`${base}${this.wiki.id}`, (err, res, body) => {
-            expect(body).toContain("I am a private wiki");
+            expect(body).toContain("CRUD Private Wiki");
             done();
           });
         });
-      });
+      }); 
       describe("GET /wikis/:id/edit", () => {
         it("should render a view with an edit wiki form", done => {
           request.get(`${base}${this.wiki.id}/edit`, (err, res, body) => {
@@ -904,5 +905,5 @@ describe("routes : wikis", () => {
         });
       });
     });
-  });  */
+  });  
 });
