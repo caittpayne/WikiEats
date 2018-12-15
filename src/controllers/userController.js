@@ -1,5 +1,6 @@
 const userQueries = require('../db/queries.users.js');
 const wikiQueries = require('../db/queries.wikis.js');
+const collaboratorQueries = require('../db/queries.collaborators.js');
 const passport = require('passport');
 
 module.exports = {
@@ -105,20 +106,24 @@ module.exports = {
               console.log(err);
             res.redirect(err, '/');
           } else {
-
             wikiQueries.downgradeWikis(user.id, (err, wiki) => {
                 if(err) {
+                    console.log(err);
                     res.redirect(401, '/');
-                  } else {
-                    req.flash('notice','Your account has been downgraded');
-                    res.redirect(`/users/${req.params.id}`);
-                  }
-          
-            })
+                } else {
+                   collaboratorQueries.removeCollaborators(wiki, (err, collaborator) => {
+                       if(err) {
+                           console.log(err);
+                           res.redirect(401, '/');
+                       } else {
+                        req.flash('notice','Your account has been downgraded');
+                        res.redirect(`/users/${req.params.id}`);
+                       }
+                   });
+                }
+            });
           }
-        });
-
-        
+        });   
       },
 
     signInForm(req, res, next) {

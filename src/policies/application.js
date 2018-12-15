@@ -20,6 +20,17 @@ module.exports = class ApplicationPolicy {
     }
 
     _isCollaborator() {
+        let temp = 0;
+        console.log('record' + this.record);
+        this.record.collaborators.forEach((collab) => {
+  
+          if(collab.userId == this.user.id) {
+              temp++;
+          }
+  
+        });
+        console.log('temp' + temp);
+        return temp > 0;
     }
 
     new() {

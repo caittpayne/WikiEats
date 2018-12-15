@@ -8,9 +8,11 @@
             <div>
 
                 <a href='users/<%= collaborator.userId %>'> <%= collaborator.name %> </a>
+                <% if(currentUser.isAdmin() || currentUser.isOwner(currentUser, wiki)) { %>
                 <form action='<%= wiki.id %>/collaborators/<%= collaborator.id %>/destroy'method='post'>
                 <button type='submit' class='btn'>Delete</button>
                 </form>
+                <% } %>
             </div>
         </main>
         <% include ../static/partials/baseScripts.ejs %>

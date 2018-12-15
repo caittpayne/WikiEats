@@ -28,7 +28,7 @@
                     <% }) %>
                     <% } %>
 
-                    <% if(wiki.private === true) { %>
+                    <% if(wiki.private === true && (currentUser.isOwner(currentUser, wiki) || currentUser.isAdmin())) { %>
                         <button   class="btn btn-md" data-toggle="modal" data-target="#addCollab">Add Collaborators</button>
                         <% } %>
         </div>

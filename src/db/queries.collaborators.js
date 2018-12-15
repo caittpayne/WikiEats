@@ -6,27 +6,48 @@ const Authorizer = require('../policies/collaborator.js');
 module.exports = {
     
     createCollaborator(newCollaborator, callback) {
-        return Collaborator.create(newCollaborator)
+        Collaborator.findOne({where: {
+            userId: newCollaborator.userId,
+            wikiId: newCollaborator.wikiId
+        }})
         .then((collaborator) => {
-            callback(null, collaborator);
+            if(collaborator) {
+                callback(err)
+            } else {
+                return Collaborator.create(newCollaborator)
+                .then((collaborator) => {
+                    callback(null, collaborator);
+                })
+                .catch((err) => {
+                    callback(err);
+                });
+            }
         })
         .catch((err) => {
             callback(err);
-        });
+        })
     },
 
     deleteCollaborator(req, callback) {
         return Collaborator.findById(req.params.id)
         .then((collaborator) => {
-           /* const authorized = new Authorizer(req.user, collaborator).destroy();*/
 
-           /* if(authorized) { */
-                collaborator.destroy();
-                callback(null, collaborator)
-        /*    } else { */
-                req.flash('notice', 'You are not authorized to do that.');
-                callback(401);
-        /*   } */
+            Wiki.findById(collaborator.wikiId)
+            .then((wiki) => {
+                const authorized = new Authorizer(req.user, wiki).destroy();
+
+                if(authorized) { 
+                    collaborator.destroy();
+                    callback(null, collaborator)
+                } else { 
+                    req.flash('notice', 'You are not authorized to do that.');
+                    callback(401);
+               } 
+            })
+            .catch((err) => {
+                callback(err);
+            })    
+            
         });
     },
 
@@ -48,5 +69,22 @@ module.exports = {
         .catch((err) => {
             callback(err);
         })
-    }
+    },
+
+    removeCollaborators(wiki, callback) {
+       Collaborator.destroy(
+           {
+               where: 
+               {
+                   wikiId: wiki.id
+               }
+           }
+       )
+       .then((collaborator) => {
+         callback(null, collaborator);
+       })
+       .catch((err) => {
+           callback(err);
+       })
+    },
 }

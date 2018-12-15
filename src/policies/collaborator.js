@@ -5,15 +5,11 @@ module.exports = class CollaboratorPolicy extends ApplicationPolicy {
         return this._isPremium() || this._isAdmin();
     }
 
-    edit() {
-        return this._isOwner() || this._isAdmin();
-    }
-
     create() {
         return this.new();
     }
 
     destroy() {
-        return this.update();
+        return this._isOwner() || this._isAdmin();
     }
 }

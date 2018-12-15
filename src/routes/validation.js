@@ -1,4 +1,5 @@
-const { Console } = require('console');
+const collaboratorQueries = require('../db/queries.collaborators');
+const userQueries = require('../db/queries.users');
 
 module.exports = {
     validateUsers(req, res, next) {
@@ -32,4 +33,6 @@ module.exports = {
           return next();
         }
       },
+
+      
 }

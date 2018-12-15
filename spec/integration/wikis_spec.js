@@ -14,7 +14,8 @@ describe("routes : wikis", () => {
       User.create({
         email: "user@example.com",
         password: "12345678910",
-        name: "bob"
+        name: "bob",
+        role: 'standard'
       })
         .then(user => {
           this.user = user;
@@ -25,8 +26,10 @@ describe("routes : wikis", () => {
             private: false,
             userId: this.user.id
           }).then(wiki => {
+
             this.wiki = wiki;
             done();
+
           });
         })
         .catch(err => {
@@ -43,7 +46,6 @@ describe("routes : wikis", () => {
           {
             url: 'http://localhost:3000/auth/fake',
             form: {
-              role: 'guest',
               userId: '0'
             }
           },
@@ -394,6 +396,7 @@ describe("routes : wikis", () => {
         });
     });
   });
+/*
 
   // Premium User
   describe("Premium user CRUD actions", () => {
@@ -901,5 +904,5 @@ describe("routes : wikis", () => {
         });
       });
     });
-  });
+  });  */
 });

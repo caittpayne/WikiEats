@@ -80,7 +80,12 @@ module.exports = {
       },
     
       updateWiki(req, updatedWiki, callback) {
-        return Wiki.findById(req.params.id)
+        return Wiki.findById(req.params.id, {
+            include: [{
+              model: Collaborator,
+              as: "collaborators"
+            }]
+          })
           .then((wiki) => {
     
             if(!wiki) {
@@ -127,19 +132,18 @@ module.exports = {
                     wikis.forEach((wiki) => {
                         wiki.private = false
                         wiki.save()
-                        .then((wiki) => {
+                        .then((wiki) => { 
                             allWikis++;
+                                    
                             if(allWikis === wikis.length) {
                                 callback(null, wiki);
-                            }
+                            }           
                         })
                         .catch((err) => {
                             callback(err);
                         })
                     })
                 }
-
-                callback(null, null);
             })
             .catch((err) => {
                 callback(err);

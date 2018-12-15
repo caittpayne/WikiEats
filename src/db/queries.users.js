@@ -2,7 +2,7 @@ const User = require('./models').User;
 const bcrypt = require('bcryptjs');
 const sgMail = require('@sendgrid/mail');
 const Wiki = require('./models').Wiki;
-
+const Collaborator = require('./models').Collaborator;
 module.exports = {
 
     createUser(newUser, callback) {
@@ -93,7 +93,13 @@ module.exports = {
                 .then((wikis) => {
                     result['wikis'] = wikis;
 
-                    callback(null, result);
+                Collaborator.scope({method: ['allCollaborations', id]}).all()
+                    .then((collaborators) => {
+                        result['collaborators'] = collaborators;
+
+                        callback(null, result);
+                    })
+                    
                 })
             }
         });

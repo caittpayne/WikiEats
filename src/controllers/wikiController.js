@@ -85,33 +85,40 @@ module.exports = {
             } else {
                 res.render('wikis/show', {wiki, html: markdown.toHTML(wiki.body)});
             }
-          });
+        });
     },
 
     
     edit(req, res, next) {
         wikiQueries.getWiki(req.params.id, (err, wiki) => {
-            var authorized;
-  
-            if(wiki.private == true) {
-              authorized = new Private(req.user, wiki).edit();
+console.log('user ' + req.user);
+            if(req.user) {
+                var authorized;
+                if(wiki.private == true) {
+                  authorized = new Private(req.user, wiki).edit(req.user, wiki);
+                } else {
+                    authorized = new Public(req.user, wiki).edit(req,user, wiki);
+                }
+      
+                if(authorized) {
+                  wikiQueries.getWiki(req.params.id, (err, wiki) => {
+                      if(err || wiki == null) {
+                        res.redirect(404, `/wikis`);
+                      } else {
+                          res.render('wikis/edit', {wiki});
+                        }
+                  }); 
+              } else {
+                  req.flash('notice', 'You are not authorized to do that');
+                  res.redirect(`/wikis/${wiki.id}`);
+              }
+
             } else {
-                authorized = new Public(req.user, wiki).edit();
+                req.flash('notice', 'You are not authorized to do that');
+                res.redirect(`/wikis/${wiki.id}`);
             }
-  
-            if(authorized) {
-              wikiQueries.getWiki(req.params.id, (err, wiki) => {
-                  if(err || wiki == null) {
-                    res.redirect(404, `/wikis`);
-                  } else {
-                      res.render('wikis/edit', {wiki});
-                    }
-              }); 
-          } else {
-              req.flash('notice', 'You are not authorized to do that');
-              res.redirect(`/wikis/${wiki.id}`);
-          }
-        })
+        });
+    
       },
 
     update(req, res, next) {

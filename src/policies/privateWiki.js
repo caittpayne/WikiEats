@@ -7,7 +7,7 @@ module.exports = class PrivateWikiPolicy extends ApplicationPolicy {
     }
 
     show() {
-        return this._isOwner() || this._isAdmin();
+        return this._isOwner() || this._isAdmin() || this._isCollaborator();
     }
 
     edit() {
@@ -23,6 +23,6 @@ module.exports = class PrivateWikiPolicy extends ApplicationPolicy {
     }
 
     destroy() {
-        return this.update();
+        return this._isOwner() || this._isAdmin();
     }
 }

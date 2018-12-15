@@ -1,5 +1,6 @@
 const collaboratorQueries = require('../db/queries.collaborators.js');
 const userQueries = require('../db/queries.users.js');
+const wikiQueries = require('../db/queries.wikis.js');
 const Authorizer = require('../policies/collaborator.js');
 
 module.exports = {
@@ -14,22 +15,30 @@ module.exports = {
                         req.flash('User not found');
                         res.redirect(req.headers.referer);
                     } else {
-    
-                        let newCollaborator = {
-                            userId: user.id,
-                            wikiId: req.params.id,
-                            name: user.name
-                        };
-    
-                        collaboratorQueries.createCollaborator(newCollaborator, (err, collaborator) => {
-                            if(err) {
-                                req.flash('notice', 'User is already a collaborator')
-                                res.redirect(req.headers.referer);
+
+                        wikiQueries.getWiki(req.params.id, (err, wiki) => {
+                            if(err || !wiki) {
+                                res.redirect(err, req.headers.referer);
+                            } else {
+
+                                let newCollaborator = {
+                                    userId: user.id,
+                                    wikiId: wiki.id,
+                                    name: user.name,
+                                    wikiName: wiki.title
+                                };
+            
+                                collaboratorQueries.createCollaborator(newCollaborator, (err, collaborator) => {
+                                    if(err) {
+                                        req.flash('notice', 'User is already a collaborator')
+                                        res.redirect(req.headers.referer);
+                                    }
+                                    else {
+                                        res.redirect(req.headers.referer);
+                                    }
+                                });
                             }
-                            else {
-                                res.redirect(req.headers.referer);
-                            }
-                        });
+                        })
                     }
                 })
             } else {

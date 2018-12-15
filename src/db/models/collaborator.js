@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     name: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    wikiName: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
   }, {});
   Collaborator.associate = function(models) {
@@ -26,5 +30,13 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE'
       });
   };
+
+  Collaborator.addScope('allCollaborations', (userId) => {
+    return {
+        where: { userId: userId },
+        order: [['createdAt', 'DESC']]
+    }
+});
+
   return Collaborator;
 };

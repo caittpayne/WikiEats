@@ -87,6 +87,17 @@
       </div>
       <div>
           <h5>Collaborations</h5>
+          <ul class="list-unstyled">
+                <% if(collaborators) { %>
+                  <% collaborators.forEach((collaborator) => { %>
+                    <li>
+                      <a href="/wikis/<%= collaborator.wikiId %>">
+                        <%= collaborator.wikiName %>
+                      </a>
+                    </li>
+                  <% }) %>
+                <% } %>
+              </ul>
       </div>
  
       <hr>

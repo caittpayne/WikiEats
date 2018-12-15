@@ -21,13 +21,13 @@
           <small class="text-muted" id="bodyHelp">body must be 10 or more characters in length.</small>
         </div>
         <% if(currentUser) { %>
-            <% if(currentUser.id === wiki.userId && (currentUser.isAdmin() || currentUser.isPremium())) { %>
+            <% if((currentUser.id === wiki.id && currentUser.isPremium()) || currentUser.isAdmin()) { %>
         <div class="form-check">
-            <% if(wiki.private == true) { %>
-            <input class="form-check-input" checked='checked' name="private" type="checkbox" value="true" id="privateWiki">
-            <% } else { %>
-                <input class="form-check-input" name="private" type="checkbox" value="true" id="privateWiki">
-                <% } %>
+                <% if(wiki.private === true) { %>
+                    <input class="form-check-input" checked='checked' name="private" type="checkbox" value="true" id="privateWiki">
+                    <% } else { %>
+                        <input class="form-check-input" name="private" type="checkbox" value="true" id="privateWiki">
+                        <% } %>
             <label class="form-check-label" for="privateWiki">
               Private Wiki
             </label>

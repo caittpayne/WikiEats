@@ -33,7 +33,8 @@ describe("Collaborator", () => {
           Collaborator.create({
             userId: this.user.id,
             wikiId: this.wiki.id,
-            name: this.user.name
+            name: this.user.name,
+            wikiName: this.wiki.title
           })
           .then((collaborator) => {
             this.collaborator = collaborator;
@@ -57,7 +58,8 @@ describe("Collaborator", () => {
       Collaborator.create({                
         userId: this.user.id,
         wikiId: this.wiki.id,
-        name: this.user.name
+        name: this.user.name,
+        wikiName: this.wiki.name
       })
       .then((collaborator) => {           
         expect(collaborator.userId).toBe(this.user.id);
