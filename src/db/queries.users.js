@@ -119,9 +119,11 @@ module.exports = {
     getCollabUser(email, callback) {
         User.findOne({where: {email: email}})
         .then((user) => {
+            console.log('get collab user ' + user)
             callback(null, user);
         })
         .catch((err) => {
+            console.log(err)
             callback(err);
         });
     },

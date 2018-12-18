@@ -16,6 +16,7 @@ module.exports = class ApplicationPolicy {
     }
 
     _isPremium() {
+        console.log('user role' + this.user.role);
         return this.user && this.user.role == 'premium';
     }
 
