@@ -1,3 +1,5 @@
+const models = require('../models');
+
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Wiki = sequelize.define('Wiki', {
@@ -30,11 +32,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'wikiId',
         as: 'collaborators'
     });
+
+    Wiki.hasMany(models.Image, {
+        foreignKey: 'wikiId',
+        as: 'images'
+    });
     
   };
   
-
-
   Wiki.addScope('lastFiveFor', (userId) => {
     return {
         where: { userId: userId },

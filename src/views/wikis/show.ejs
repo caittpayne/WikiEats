@@ -12,6 +12,13 @@
                 <%= wiki.title %>
             </h1>
         </div>
+        <div>
+            
+                <% if(wiki.images[0]) { %>
+                    <div><img class='wiki-image' src="data:image/jpg;base64,<%- imageData %>" alt="wiki image"></div>
+              <%  } %>
+       
+        </div>
         <% if(currentUser) { %>
         <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-primary">Edit</a>
         <% if(currentUser.isOwner(currentUser.id, wiki) || currentUser.isAdmin()) { %>

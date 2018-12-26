@@ -1,26 +1,19 @@
-html {
-    height: 100vh;
-}
 body {
-    padding-top: 54px;
-    height: 100vh;
     font-family: 'Open Sans', sans-serif;
     color: #707070;
+    padding-top: 100px;
   }
-
-h4 {
-    text-align: center;
-}
 
 /* Navbar */
 .navbar {
     background-color: white;
+    height: auto;
 }
 
 .navbar-brand {
     font-family: 'Shadows Into Light Two', cursive;
     color: #D43232;
-    font-size: 2.5rem;
+    font-size: 2.5em;
 }
 
 /* Home Page Area */
@@ -32,9 +25,17 @@ h4 {
 
 .search {
     height: 80vh;
-    margin-top: 60px;
     background: #251F1F;
     color: white;
+    margin: 0px;
+    padding: 0px;
+}
+
+.container-fluid {
+        padding-right:0;
+        padding-left:0;
+        margin-right:auto;
+        margin-left:auto;
 }
 
 /* Sign Up Page */
@@ -59,9 +60,7 @@ h4 {
     margin: 10px;
 }
 
-.alert {
-    padding: 50px 20px 10px 20px;
-}
+
 
 
 /* Payment Form */
@@ -88,3 +87,31 @@ h4 {
   .StripeElement--webkit-autofill {
     background-color: #fefde5 !important;
   }
+
+  /* Images */
+
+  .wiki-image {
+    width: 500px;
+    height: auto;
+  }
+
+  .list-image {
+    width: 200px;
+    height: auto;
+  }
+
+  .featured-wikis {
+      text-align: left;
+  }
+
+  .featured-wiki {
+    width: 700px;
+    height: 350px;
+    margin-bottom: 10px;
+    background-size: 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    overflow: hidden;
+  } 
+
+  

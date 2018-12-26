@@ -16,6 +16,9 @@
       <ul class="navbar-nav ml-auto">
         <% if(currentUser) { %>
         <li class="nav-item">
+            <a class="nav-link" href="/wikis">Wikis</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="/wikis/new">New Wiki</a>
         </li>
         <li class="nav-item">
@@ -25,6 +28,9 @@
           <a class="nav-link" href="/users/signout">Sign Out</a>
         </li>
         <% } else { %>
+        <li class="nav-item">
+            <a class="nav-link" href="/wikis">Wikis</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="/users/signin">Sign In</a>
         </li>

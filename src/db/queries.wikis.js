@@ -2,6 +2,7 @@ const Wiki = require('./models').Wiki;
 const Public = require('../policies/application');
 const Private = require('../policies/privateWiki');
 const Collaborator = require('./models').Collaborator;
+const Image = require('./models').Image;
 
 module.exports = {
     
@@ -10,6 +11,9 @@ module.exports = {
             include: [{
                 model: Collaborator,
                 as: "collaborators"
+            }, {
+                model: Image,
+                as: 'images'
             }]
         })
 
@@ -26,11 +30,13 @@ module.exports = {
             include: [{
               model: Collaborator,
               as: "collaborators"
+            },
+            {
+                model: Image,
+                as: 'images'
             }]
           })
           .then((wiki) => {
-
-            console.log('queries ' + wiki.title)
               callback(null, wiki);
           })
           .catch((err) => {
@@ -39,7 +45,6 @@ module.exports = {
               callback(err);
           })
     },
-
 
     addWiki(newWiki, callback) {
         return Wiki.create({
@@ -153,5 +158,22 @@ module.exports = {
                 callback(err);
             })
         },
+
+            
+    getFeaturedWikis(callback) {
+        return Wiki.all({
+            include: [{
+                model: Image,
+                as: 'images',
+                required: true
+            }]
+        })
+        .then((wikis) => {
+            callback(null, wikis);
+        })
+        .catch((err) => {
+            callback(err);
+        })
+    }
 
     }

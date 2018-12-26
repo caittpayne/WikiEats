@@ -1,6 +1,3 @@
-const collaboratorQueries = require('../db/queries.collaborators');
-const userQueries = require('../db/queries.users');
-
 module.exports = {
     validateUsers(req, res, next) {
         if(req.method === 'POST') {
@@ -24,6 +21,7 @@ module.exports = {
         if(req.method === 'POST') {
           req.checkBody('title', 'must be at least 2 characters in length').isLength({min: 2});
           req.checkBody('body', 'must be at least 10 characters in length').isLength({min: 10});
+          req.checkBody('image').optional();
         }
         const errors = req.validationErrors();
         if(errors) {

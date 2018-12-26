@@ -1,8 +1,9 @@
 const wikiQueries = require('../db/queries.wikis.js');
+const imageQueries = require('../db/queries.images.js');
 const Private = require('../policies/privateWiki.js');
 const Public = require('../policies/application.js');
 const markdown = require('markdown').markdown;
-
+const Buffer = require('buffer/').Buffer;
 
 module.exports = {
 
@@ -51,16 +52,30 @@ module.exports = {
                 title: req.body.title,
                 body: req.body.body,
                 private: isPrivate,
-                userId: req.user.id
+                userId: req.user.id,
             };
     
             wikiQueries.addWiki(newWiki, (err, wiki) => {
                 if(err) {
+                    console.log(err);
                     res.redirect(500, '/wikis/new');
-                } else {
-                    res.redirect(303, `/wikis/${wiki.id}`);
+                } else {                   
+                
+                    if(req.file) {
+                        imageQueries.uploadImage(req, wiki, (err, image) => {
+                            if(err) {
+                                console.log(err);
+                                res.redirect(500, '/wikis/new');
+                            } else {
+                                res.redirect(303, `${wiki.id}`);
+                            }
+                        })
+                    } else {
+                        res.redirect(303, `${wiki.id}`);
+                    }        
                 }
             });
+
         } else {
             req.flash('notice', 'You are not authorized to do that.');
             res.redirect(`/wikis`);
@@ -77,12 +92,20 @@ module.exports = {
                 const authorized = new Private(req.user, wiki).show();
 
                 if(authorized) {
-                    res.render('wikis/show', {wiki, html: markdown.toHTML(wiki.body)});
+                    if(wiki.images[0]) {
+                        res.render('wikis/show', {wiki, html: markdown.toHTML(wiki.body), imageData: Buffer.from(wiki.images[0].data).toString('base64')});
+                    } else {
+                        res.render('wikis/show', {wiki, html: markdown.toHTML(wiki.body)});
+                    }
+                    
                 } else {
                     req.flash('notice', 'You are not authorized to view this wiki');
                     res.redirect('/wikis');
                 }
             } else {
+                if(wiki.images[0]) {
+                    res.render('wikis/show', {wiki, html: markdown.toHTML(wiki.body), imageData: Buffer.from(wiki.images[0].data).toString('base64')});
+                }
                 res.render('wikis/show', {wiki, html: markdown.toHTML(wiki.body)});
             }
         });

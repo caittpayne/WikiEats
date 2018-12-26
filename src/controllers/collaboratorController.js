@@ -8,8 +8,6 @@ const Authorizer = require('../policies/collaborator.js');
 module.exports = {
 
     create(req, res, next) {
-        console.log(req);
-        console.log('create invoked')
         const authorized = new Authorizer(req.user).create();
         if(authorized) {
             console.log('request' + req)

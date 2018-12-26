@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <% include ./partials/head.ejs %>
+<head>
+    <% include ./partials/head.ejs %>
+</head>
+  <% include ./partials/navbar.ejs %>
   <body>
-        <% include ./partials/navbar.ejs %>
     <main class="container-fluid">
         <% include ./partials/messages.ejs %>
-        <section class='row align-items-center justify-content-center main'>
-            <section class='col-md-5 text-center align-self-center'>
-                <h4 class=''>
-                    A space to create, collaborate, and share memorable food experiences around the world.
-                </h4>
-                <a href='../users/signup'><button class='btn btn-md btn-font'>Sign Up</button></a>
+        <% if(currentUser) { %>
+            <section class='container featured-top'>
+                <section class='row'>
+                    <section class='col-md-9'>
+                        <% include ./featuredWiki.ejs %>
+                    </section>
+                    <section class='col-md-3'>
+                        <% include ./textWikis.ejs %>
+                    </section>
+                </section>
             </section>
-        </section>
-        <section class='row justify-content-center search'>
-            <section class='col-md-3 align-self-start'>
-                <h3>This is the wiki/search section</h3>
+        <% } else { %>
+            <section class='container-fluid'>
+                    <section class='row align-items-center justify-content-center main'>
+                            <section class='col-md-5 text-center align-self-center'>
+                                <h4 class=''>
+                                    A space to create, collaborate, and share memorable food experiences around the world.
+                                </h4>
+                                <a href='../users/signup'><button class='btn btn-md btn-font'>Sign Up</button></a>
+                            </section>
+                        </section>
             </section>
-        </section>
+         
+        <% } %>
+        
+        <section class='container-fluid search'>
+          <% include ./imageWikis.ejs %>        
+        </section>               
     </main>
     <% include ./partials/baseScripts.ejs %>
   </body>
