@@ -8,12 +8,12 @@
     <main class="container-fluid">
         <% include ./partials/messages.ejs %>
         <% if(currentUser) { %>
-            <section class='container featured-top'>
+            <section class='container'>
                 <section class='row'>
-                    <section class='col-md-9'>
+                    <section class='col-md-8'>
                         <% include ./featuredWiki.ejs %>
                     </section>
-                    <section class='col-md-3'>
+                    <section class='col-md-4'>
                         <% include ./textWikis.ejs %>
                     </section>
                 </section>
@@ -33,7 +33,9 @@
         <% } %>
         
         <section class='container-fluid search'>
-          <% include ./imageWikis.ejs %>        
+            <section class='container'>
+                    <% include ./listWikis.ejs %>  
+            </section>      
         </section>               
     </main>
     <% include ./partials/baseScripts.ejs %>

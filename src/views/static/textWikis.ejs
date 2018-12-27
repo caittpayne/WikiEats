@@ -3,9 +3,31 @@
   <% include ./partials/head.ejs %>
   <body>
         <% include ./partials/navbar.ejs %>
-    <main class="container-fluid">
-        <section>
-            <p>This is where the list goes</p>
+    <main class="container" style='padding: 0px 20px 0px 20px'>
+        <section class='row' style='margin-bottom: 30px'>
+            <section class='col-sm-12 align-self-left'>
+                <h5>Latest Stories</h5>
+            </section>
+        </section>
+        <section class='row'>
+            <section class='col-sm-12 align-self-left'>
+                <a href='wikis/<%= wikis[wikis.length - 2].id %>'><h4><%= wikis[wikis.length - 2].title %></h4></a>
+                <p class='text-truncate'><%= wikis[wikis.length - 2].body %></p>
+            </section>
+        </section>
+        <hr>
+        <section class='row'>
+            <section class='col-sm-12 align-self-left'>
+                <h4><%= wikis[wikis.length - 3].title %></h4>
+                <p class='text-truncate'><%= wikis[wikis.length - 3].body %></p>
+            </section>
+        </section>
+        <hr>
+        <section class='row'>
+            <section class='col-sm-12 align-self-left'>
+                <h4><%= wikis[wikis.length - 4].title %></h4>
+                <p class='text-truncate'><%= wikis[wikis.length - 4].body %></p>
+            </section>
         </section>
     </main>
     <% include ./partials/baseScripts.ejs %>

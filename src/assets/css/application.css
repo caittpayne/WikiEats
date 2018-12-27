@@ -90,22 +90,8 @@ body {
 
   /* Images */
 
-  .wiki-image {
-    width: 500px;
-    height: auto;
-  }
-
-  .list-image {
-    width: 200px;
-    height: auto;
-  }
-
-  .featured-wikis {
-      text-align: left;
-  }
-
   .featured-wiki {
-    width: 700px;
+    width: 100%;
     height: 350px;
     margin-bottom: 10px;
     background-size: 100% !important;
@@ -114,4 +100,47 @@ body {
     overflow: hidden;
   } 
 
+  .list-wiki {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 10px;
+    background-size: 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    overflow: hidden;
+  }
+
   
+  .list-wiki:hover .overlay {
+    opacity: .7;
+  }
+  
+  
+  .list-wiki-text {
+    color: black;
+    font-size: 20px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .overlay {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%; 
+    opacity: 0;
+    transition: .5s ease;
+    background-color: white;
+  }
+
+  .list-row {
+      padding-top: 20px;
+  }

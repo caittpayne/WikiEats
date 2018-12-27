@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ./partials/head.ejs %>
+  <body>
+    <section class='container' style='padding-top: 40px'>
+        <% if(wikis) { %>
+            <% for(let i = (wikis.length - 11 || 0); i < (wikis.length - 4); i++) { %>
+
+                <% if(i % 3 === 0) { %>
+
+                </section>
+                    <section class='row list-row'>
+                        <section class='col-md-4'>
+                            <a href='wikis/<%= wikis[i].id %>'>
+                                <div class="list-wiki"style='background: url("data:image/jpeg;base64, <%= Buffer.from(wikis[i].images[0].data).toString('base64') %> ")'>
+                                    <div class='overlay'>
+                                        <div class='list-wiki-text'><h5><%= wikis[i].title %></h5></div>
+                                    </div>
+                                </div>
+                            </a>       
+                        </section>
+                
+                <% } else if (i === wikis.length - 5) { %>
+                
+                    </section>
+
+                <% } else { %>
+        
+                    <section class='col-md-4'>
+                            <a href='wikis/<%= wikis[i].id %>'>
+                                <div class="list-wiki"style='background: url("data:image/jpeg;base64, <%= Buffer.from(wikis[i].images[0].data).toString('base64') %> ")'>
+                                    <div class='overlay'>
+                                            <div class='list-wiki-text'><h5><%= wikis[i].title %></h5></div>
+                                    </div>
+                                </div>
+                            </a>       
+                        </section>    
+            
+            <% } %>
+            <% } %>
+
+        <% } %>
+        <section class='row'>
+            <section class='col-md-12'>
+                <a href='/wikis'><p>More Stories</p></a>
+            </section>
+        </section>
+    </section>
+    <% include ./partials/baseScripts.ejs %>
+  </body>
+</html>
+

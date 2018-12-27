@@ -12,26 +12,78 @@
       <% if(currentUser) { %>
       <a href ="/wikis/new" class="btn btn-success">New Wiki</a>
       <% } %>
-      <ul class="list-group">
 
         <% if(currentUser) { %>
-        <% wikis.forEach((wiki) => { %>
-            <% if(wiki.private === false || currentUser.isOwner(currentUser, wiki) || currentUser.isCollaborator(currentUser, wiki)) { %>
-          <li class="list-group-item">
-            <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
-          </li>
+        <% for(let i = 0; i < wikis.length; i++) { %>
+            <% if(wikis[i].private === false || currentUser.isOwner(currentUser, wiki) || currentUser.isCollaborator(currentUser, wiki)) { %>
+          
+                <% if(i % 3 === 0) { %>
+
+                </section>
+                    <section class='row'>
+                        <section class='col-md-4'>
+                                <a href='wikis/<%= wikis[i].id %>'>
+                                    <div class="list-wiki"style='background: url("data:image/jpeg;base64, <%= Buffer.from(wikis[i].images[0].data).toString('base64') %> ")'></div>
+                                </a>
+                            <p><%= wikis[i].title %></p>
+                        </section>
+                
+                <% } else if (i === wikis.length - 1) { %>
+                
+                    </section>
+
+                <% } else { %>
+        
+                    <section class='col-md-4'>
+                            <a href='wikis/<%= wikis[i].id %>'>
+                                <div class="list-wiki"style='background: url("data:image/jpeg;base64, <%= Buffer.from(wikis[i].images[0].data).toString('base64') %> ")'></div>
+                            </a>
+                    </section>
+            
+            <% } %>
+
+        
           <% } %>
-        <% }) %>
-      </ul>
+        <% } %>
       <% } else { %>
-        <% wikis.forEach((wiki) => { %>
-            <% if(wiki.private === false) { %>
-          <li class="list-group-item">
-            <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
-          </li>
+        <% for(let i = 0; i < wikis.length; i++) { %>
+            <% if(wikis[i].private === false) { %>
+
+                <% if(i % 3 === 0) { %>
+
+                </section>
+                    <section class='row'>
+                        <section class='col-md-4'>
+                            <a href='wikis/<%= wikis[i].id %>'>
+                                <div class="list-wiki"style='background: url("data:image/jpeg;base64, <%= Buffer.from(wikis[i].images[0].data).toString('base64') %> ")'></div>
+                            </a>
+                            <div>
+                                    <p><%= wikis[i].title %></p>
+                                    <p class='text-truncate'><%= wikis[wikis.length - 1].body %></p>
+                            </div>
+                           
+                        </section>
+                
+                <% } else if (i === wikis.length - 1) { %>
+                
+                    </section>
+
+                <% } else { %>
+        
+                    <section class='col-md-4'>
+                            <a href='wikis/<%= wikis[i].id %>'>
+                                <div class="list-wiki"style='background: url("data:image/jpeg;base64, <%= Buffer.from(wikis[i].images[0].data).toString('base64') %> ")'></div>
+                            </a>
+                            <div>
+                                    <p><%= wikis[i].title %></p>
+                                    <p class='text-truncate'><%= wikis[wikis.length - 1].body %></p>
+                            </div>
+                       
+                    </section>
+            
+            <% } %>
           <% } %>
-        <% }) %>
-      </ul>
+        <% } %>
       <% } %>
 
     </main>
