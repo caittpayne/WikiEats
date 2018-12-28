@@ -5,17 +5,17 @@
         <% if(wikis) { %>
             <section class='row'>
                 <section class='col-sm-12'>
-                    <div class="featured-wiki"style='background: url("data:image/jpeg;base64, <%= Buffer.from(wikis[wikis.length - 1].images[0].data).toString('base64') %> ")'></div>
+                    <a href='wikis/<%= wikis[wikis.length - 1].id %>'> <div class="featured-wiki"style='background: url("data:image/jpeg;base64, <%= Buffer.from(wikis[wikis.length - 1].images[0].data).toString('base64') %> ")'></div></a>
                 </section>
             </section>
             <section class='row'>
                 <section class='col-sm-12 align-self-left'>
-                    <h4><%= wikis[wikis.length - 1].title %></h4>
+                    <a href='wikis/<%= wikis[wikis.length - 1].id %>'><h4><%= wikis[wikis.length - 1].title %></h4></a>
                 </section>
             </section>
             <section class='row'>
                 <section class='col-sm-12 align-self-left'>
-                    <p class='text-truncate'><%= wikis[wikis.length - 1].body %></p>
+                    <p class='text-truncate featured-text'><%= wikis[wikis.length - 1].body %></p>
                 </section>
             </section>
         <% } %>       

@@ -3,19 +3,23 @@
     <head>
             <% include ../static/partials/head.ejs %>
     </head>
-    <body>
-        <main>
-            <div>
+    <section class='container-fluid'>
+        <section class='row'>
+            <section class='col-sm-8'>
+                    <a href='users/<%= collaborator.userId %>'> <%= collaborator.name %> </a>
+            </section>
+            <section class='col-md-4'>
 
-                <a href='users/<%= collaborator.userId %>'> <%= collaborator.name %> </a>
-                <% if(currentUser.isAdmin() || currentUser.isOwner(currentUser, wiki)) { %>
-                <form action='<%= wiki.id %>/collaborators/<%= collaborator.id %>/destroy'method='post'>
-                <button type='submit' class='btn'>Delete</button>
-                </form>
-                <% } %>
-            </div>
-        </main>
+                    <% if(currentUser.isAdmin() || currentUser.isOwner(currentUser, wiki)) { %>
+                        <form action='<%= wiki.id %>/collaborators/<%= collaborator.id %>/destroy'method='post'>
+                            <button type='submit' class='collab-button'><i class="fas fa-minus-circle"></i></button>
+                        </form>
+                    <% } %>
+            </section>
+        </section>
+                        
+
+    </section>
+      
         <% include ../static/partials/baseScripts.ejs %>
-
-    </body>
 </html>

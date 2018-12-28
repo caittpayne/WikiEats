@@ -9,10 +9,19 @@ module.exports = {
 
     index(req, res, next) {
          wikiQueries.getAllWikis((err, wikis) => {
+             var privateWikis = [];
+             var publicWikis = [];
+             wikis.forEach((wiki) => {
+                 if(wiki.private === true) {
+                     privateWikis.push(wiki);
+                 } else {
+                     publicWikis.push(wiki);
+                 }
+             })
              if(err) {
                  res.redirect(500, '/');
              } else {
-                 res.render('wikis/index', {wikis});
+                 res.render('wikis/index', {publicWikis, privateWikis});
              }
          })
     },
@@ -92,11 +101,8 @@ module.exports = {
                 const authorized = new Private(req.user, wiki).show();
 
                 if(authorized) {
-                    if(wiki.images[0]) {
-                        res.render('wikis/show', {wiki, html: markdown.toHTML(wiki.body), imageData: Buffer.from(wiki.images[0].data).toString('base64')});
-                    } else {
-                        res.render('wikis/show', {wiki, html: markdown.toHTML(wiki.body)});
-                    }
+                    
+                    res.render('wikis/show', {wiki, html: markdown.toHTML(wiki.body), imageData: Buffer.from(wiki.images[0].data).toString('base64')});
                     
                 } else {
                     req.flash('notice', 'You are not authorized to view this wiki');
@@ -145,7 +151,20 @@ module.exports = {
       },
 
     update(req, res, next) {
-        wikiQueries.updateWiki(req, req.body, (err, wiki) => {
+        if(!req.body.private) {
+           var updatedWiki = {
+                title: req.body.title,
+                body: req.body.body,
+                private: false
+            }
+        } else {
+            var updatedWiki = {
+                title: req.body.title,
+                body: req.body.body,
+                private: true
+            }
+        }
+        wikiQueries.updateWiki(req, updatedWiki, (err, wiki) => {
           if(err || wiki == null) {
             res.redirect(401, `/wikis/${req.params.id}/edit`);
           } else {

@@ -38,7 +38,7 @@ module.exports = {
     },
 
     upgradeUser(req, callback) {
-       return User.findById(req.params.id)
+       return User.findById(req.user.id)
           .then((user) => {
     
             if(!user) {
@@ -62,12 +62,16 @@ module.exports = {
     downgradeUser(req, callback) {
         User.findById(req.params.id)
         .then((user) => {
+            console.log('found user');
             if(!user) {
+                console.log('no user')
                 callback('User not found');
             } else {
+                console.log('else invoked')
                 user.role = 'standard';
                 user.save()
                 .then((user) => {
+                    console.log('callback')
                     callback(null, user);
                 })
                 .catch((err) => {

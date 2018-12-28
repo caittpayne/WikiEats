@@ -136,7 +136,7 @@ module.exports = {
                 }
             })
             .then((wikis) => {
-                if(wikis) {
+                if(wikis.length > 0) {
                     var allWikis = 0;
                     wikis.forEach((wiki) => {
                         wiki.private = false
@@ -152,6 +152,8 @@ module.exports = {
                             callback(err);
                         })
                     })
+                } else {
+                    callback(null, null);
                 }
             })
             .catch((err) => {

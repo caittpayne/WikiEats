@@ -10,8 +10,6 @@ module.exports = {
     create(req, res, next) {
         const authorized = new Authorizer(req.user).create();
         if(authorized) {
-            console.log('request' + req)
-            if(req.body.email != req.user.email) {
                 userQueries.getCollabUser(req.body.email, (err, user) => {
                     if(err || !user) {
                         req.flash('User not found');
@@ -20,6 +18,9 @@ module.exports = {
                         wikiQueries.getWiki(req.params.id, (err, wiki) => {
                             if(err || !wiki) {
                                 res.redirect(err, req.headers.referer);
+                            } else if (user.id === wiki.userId) {
+                                req.flash('You cannot add wiki creator as a collaborator');
+                                res.redirect(req.headers.referer);
                             } else {
 
                                 let newCollaborator = {
@@ -42,10 +43,6 @@ module.exports = {
                         })
                     }
                 })
-            } else {
-                req.flash('notice', 'You cannot add yourself as a collaborator');
-                res.redirect(req.headers.referer);
-            }
        
 
         } else {

@@ -5,44 +5,66 @@
 </head>
 <body>
     <% include ../static/partials/navbar.ejs %>
-    <main class="container">
-        <% include ../static/partials/messages.ejs %>
-        <div style="display: flex; align-items:center;">
-            <h1>
-                <%= wiki.title %>
-            </h1>
-        </div>
-        <div>
-            
-                <% if(wiki.images[0]) { %>
-                    <div><img class='wiki-image' src="data:image/jpg;base64,<%- imageData %>" alt="wiki image"></div>
-              <%  } %>
-       
-        </div>
-        <% if(currentUser) { %>
-        <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-primary">Edit</a>
-        <% if(currentUser.isOwner(currentUser.id, wiki) || currentUser.isAdmin()) { %>
-        <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
-            <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
+    <% include ../static/partials/messages.ejs %>
+    <main class="container-fluid" style='padding-top: 50px'>
+        <section class='row'>
+            <section class='col-md-12'>
+                <div class="show-wiki"style='background: url("data:image/jpeg;base64, <%- imageData %> ")'>
+                    <div class='show-wiki-overlay'>
+                        <h1 class='overlay-text'><%= wiki.title %> </h1>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <section class='container-fluid'>
+            <section class='row'>
+                    <section class='col-md-3' style='padding: 70px; text-align: center'>
+                        <% if(currentUser && wiki.private === true) { %>
+                                <h5>Collaborators:</h5>
+                                <hr>
+                                    <% if(wiki.collaborators) { %>
+                                        <% wiki.collaborators.forEach((collaborator) => { %>
+                                        <%- include("../collaborators/show.ejs", {collaborator, wiki}) %>
+                                        <% }) %>
+                                        <% } %>
+                        <% } %>
+                        </section>
+                <section class='col-md-6'>
+                    <p> <%- html %></p>
+                </section>
+                <section class='col-md-3'></section>
+            </section>
+        </section>
+        <hr>
+        <% if(currentUser && (currentUser.isOwner(currentUser, wiki) || currentUser.isAdmin())) { %>
+            <section class='row'>
+                    <section class='col-sm-4' style='text-align: right'>
+                            <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-sm">Edit</a>
+                    </section>
+                    <section class='col-sm-4' style='text-align: center'>
+                        <% if(currentUser.isOwner(currentUser, wiki) || currentUser.isAdmin() ) { %>
+                            <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
+                                <button type="submit" class="btn-sm btn">Delete</button>
+                            </form>
+                        <% } %>
+                    </section>
+                    <section class='col-sm-4' style='text-align: left'>
+                        <% if(wiki.private === true && (currentUser.isOwner(currentUser, wiki) || currentUser.isAdmin())) { %>
+                            <button class="btn btn-sm" data-toggle="modal" data-target="#addCollab">Add Collaborators</button>
+                        <% } %>
+                    </section>
+                </section>
+        <% } else if(currentUser) { %>
+            <section class='row'>
+                    <section class='col-sm-12' style='text-align: right'>
+                            <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-sm">Edit</a>
+                    </section>
+                </section>
+        <% } else { %>
+            <section></section>
         <% } %>
-        <% } %>
-        <p>
-            <%- html %>
-        </p>
-        <div>
-                <% if(wiki.collaborators) { %>
-                    <% wiki.collaborators.forEach((collaborator) => { %>
-                    <%- include("../collaborators/show.ejs", {collaborator}) %>
-                    <% }) %>
-                    <% } %>
-
-                    <% if (currentUser) { %>
-                    <% if(wiki.private === true && (currentUser.isOwner(currentUser, wiki) || currentUser.isAdmin())) { %>
-                        <button   class="btn btn-md" data-toggle="modal" data-target="#addCollab">Add Collaborators</button>
-                    <% } %>
-                    <% } %>
-        </div>
+      
+    
         <div>
                 <div
                 class="modal fade"

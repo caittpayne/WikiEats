@@ -44,7 +44,6 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   User.prototype.isOwner = function(user, record) {
-
         return record.userId == user.id;  
   }
 

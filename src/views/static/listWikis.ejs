@@ -4,8 +4,7 @@
   <body>
     <section class='container' style='padding-top: 40px'>
         <% if(wikis) { %>
-            <% for(let i = (wikis.length - 11 || 0); i < (wikis.length - 4); i++) { %>
-
+            <% for(let i = 0; i < 7; i++) { %>
                 <% if(i % 3 === 0) { %>
 
                 </section>
@@ -20,7 +19,7 @@
                             </a>       
                         </section>
                 
-                <% } else if (i === wikis.length - 5) { %>
+                <% } else if (i === 6) { %>
                 
                     </section>
 

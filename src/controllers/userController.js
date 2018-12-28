@@ -76,24 +76,24 @@ module.exports = {
     upgrade(req, res, next) {
         const stripe = require("stripe")(process.env.STRIPE_API_SECRET);
         const token = req.body.stripeToken;
-        const chargeAmount = req.body.chargeAmount;
         const charge = stripe.charges.create({
-            amount: chargeAmount,
+            amount: 1500,
             currency: 'usd',
-            description: 'Premium account charge',
+            description: `Account charge for ${req.user.name}`,
             source: token
         }, (err, charge) => {
             if(err && err.type === 'StripeCardError') {
-                req.flash('notice', 'Your payment could not be processed.');
+                req.flash('notice', 'You payment could not be processed.');
                 console.log('Your payment could not be processed');
             } else {
                 
                 userQueries.upgradeUser(req, (err, user) => {
                     if(err || user == null) {
+                        console.log(err)
                       res.redirect(401, '/');
                     } else {
                         req.flash('notice', 'Your account has been upgraded! You will receive a confirmation email shortly.')
-                        res.redirect(`/users/${req.params.id}`);
+                        res.redirect(`/users/${req.user.id}`);
                     }
                   });
             }
@@ -103,7 +103,7 @@ module.exports = {
       downgrade(req, res, next) {
         userQueries.downgradeUser(req, (err, user) => {
           if(err || user == null) {
-              console.log(err);
+            console.log(err);
             res.redirect(err, '/');
           } else {
             wikiQueries.downgradeWikis(user.id, (err, wiki) => {
@@ -111,15 +111,21 @@ module.exports = {
                     console.log(err);
                     res.redirect(401, '/');
                 } else {
-                   collaboratorQueries.removeCollaborators(wiki, (err, collaborator) => {
-                       if(err) {
-                           console.log(err);
-                           res.redirect(401, '/');
-                       } else {
+
+                    if(wiki == null) {
                         req.flash('notice','Your account has been downgraded');
-                        res.redirect(`/users/${req.params.id}`);
-                       }
-                   });
+                             res.redirect(`/users/${req.params.id}`);
+                    } else {
+                        collaboratorQueries.removeCollaborators(wiki, (err, collaborator) => {
+                            if(err) {
+                                console.log(err);
+                                res.redirect(401, '/');
+                            } else {
+                             req.flash('notice','Your account has been downgraded');
+                             res.redirect(`/users/${req.params.id}`);
+                            }
+                        }); 
+                    }                                  
                 }
             });
           }

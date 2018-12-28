@@ -11,7 +11,7 @@
 
      <section class='row'>
          <section class='col-md-6'>
-                <h3><%= `${user.name}'s Profile` %></h3>
+                <h3><%= user.name %></h3>
          </section>
      </section>
      <section class='row'>
@@ -63,11 +63,49 @@
                     <% } %>
                     <% if(user.role === 'standard') { %>
                         <div>
-                            <form action='/users/<%= user.id %>/upgrade' method='post'>
-                                <% include ./partials/upgrade.ejs %>
-                                <input type='hidden' name='chargeAmount' value='1500'>
-                            </form>
+                            <button class="btn btn-md" data-toggle="modal" data-target="#upgrade">Upgrade</button>
                         </div>
+                     
+
+                        <div
+      class="modal fade"
+      id="upgrade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="upgradeAccount"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" id='payment-form' action="/users/:id/upgrade">
+              <div class="form-group">
+                    <label for="card-element">
+                      Credit or debit card
+                    </label>
+                    <div id="card-element"></div>              
+                    <div id="card-errors" role="alert"></div>
+                  </div>          
+              <br />
+              <div id='shop'>
+                    <input type="submit" value='Upgrade' class="btn btn-primary" id='buttonCheckout' />
+              </div>
+              <% include ./partials/premiumSignup.ejs %>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
                     <% } %>
                 </div>
               </div>
@@ -105,8 +143,6 @@
                 <% } %>
               </ul>
       </div>
- 
-      <hr>
 
     <% include ../static/partials/baseScripts.ejs %>
 
