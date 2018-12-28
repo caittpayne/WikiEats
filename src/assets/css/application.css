@@ -1,8 +1,22 @@
 body {
     color: #707070;
     font-family: 'Open Sans', sans-serif;
-    padding-top: 100px;
   }
+
+  .row {
+    margin: 0px;
+}
+
+.col-md-12 {
+    padding: 0px;
+}
+
+.container-fluid {
+    padding-right:0;
+    padding-left:0;
+    margin-right:auto;
+    margin-left:auto;
+}
 
 /* Navbar */
 .navbar {
@@ -19,7 +33,7 @@ body {
 /* Home Page Area */
 
 .main {
-    padding: 130px 0px 20px 0px;
+    padding: 200px 0px 20px 0px;
     background: white; 
 }
 
@@ -27,16 +41,13 @@ body {
     height: 80vh;
     background: #251F1F;
     color: white;
-    margin: 0px;
     padding: 0px;
 }
 
-.container-fluid {
-        padding-right:0;
-        padding-left:0;
-        margin-right:auto;
-        margin-left:auto;
+.list-row {
+    padding-top: 20px;
 }
+
 
 /* Sign Up Page */
 
@@ -70,7 +81,6 @@ body {
     border-color: rgb(221, 60, 60);
     
 }
-
 
 .collab-button {
     background: none;
@@ -179,10 +189,6 @@ a:link {
     opacity: 0;
     transition: .5s ease;
     background-color: white;
-  }
-
-  .list-row {
-      padding-top: 20px;
   }
 
   .show-wiki {

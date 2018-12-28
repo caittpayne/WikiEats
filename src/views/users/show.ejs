@@ -34,7 +34,7 @@
                             id="confirmDowngrade"
                             tabindex="-1"
                             role="dialog"
-                            aria-labelledby="exampleModalCenterTitle"
+                            aria-labelledby="confirm downgrade"
                             aria-hidden="true"
                           >
                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -50,10 +50,10 @@
                                   </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Downgrading your account will make your private wikis public. Would you like to proceed?</p>
+                                    <p style='text-align: center'>Downgrading your account will make your private wikis public. Would you like to proceed?</p>
                                 </div>
                                         <form style="display:initial" action="/users/<%= user.id %>/downgrade" method="post">
-                                            <button type="submit" class="btn btn-danger">OK</button>
+                                            <button style='text-align: center' type="submit" class="btn btn-sm">OK</button>
                                         </form>
                                 </div>
                               </div>
@@ -98,7 +98,7 @@
                   </div>          
               <br />
               <div id='shop'>
-                    <input type="submit" value='Upgrade' class="btn btn-primary" id='buttonCheckout' />
+                    <input type="submit" value='Upgrade' class="btn btn-sm" id='buttonCheckout' />
               </div>
               <% include ./partials/premiumSignup.ejs %>
             </form>

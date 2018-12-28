@@ -164,6 +164,9 @@ module.exports = {
             
     getFeaturedWikis(callback) {
         return Wiki.all({
+            where: {
+                private: false
+            },
             include: [{
                 model: Image,
                 as: 'images',

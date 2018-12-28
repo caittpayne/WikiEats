@@ -5,7 +5,7 @@
 </head>
   <% include ./partials/navbar.ejs %>
   <body>
-    <main class="container-fluid">
+    <main class="container-fluid" style='padding-top: 100px'>
         <% include ./partials/messages.ejs %>
         <% if(currentUser) { %>
             <section class='container'>
@@ -25,7 +25,7 @@
                                 <h4 class=''>
                                     A space to create, collaborate, and share memorable food experiences around the world.
                                 </h4>
-                                <a href='../users/signup'><button class='btn btn-md btn-font'>Sign Up</button></a>
+                                <a href='../users/signup'><button class='btn btn-sm'>Sign Up</button></a>
                             </section>
                         </section>
             </section>

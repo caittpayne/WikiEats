@@ -14,17 +14,16 @@
         <section class="col-md-8 align-self-center plans">
           <section class="row align-items-center justify-content-center">
             <section class="col-md-6 align-self-start">
-              <h4>Free</h4>
+              <h4 style='text-align:center'>Free</h4>
               <ul>
                 <li>No Cost</li>
                 <li>Unlimited Public Wikis</li>
-                <li>5 Collaborators per Wiki</li>
               </ul>
             </section>
             <section class="col-md-6 align-self-start">
-              <h4>Premium</h4>
+              <h4 style='text-align: center'>Premium</h4>
               <ul>
-                <li>$9.99/mo.</li>
+                <li>$15.00 one time fee</li>
                 <li>Unlimited Private Wikis</li>
                 <li>Unlimited Public Wikis</li>
                 <li>Unlimited Collaborators</li>
@@ -34,7 +33,7 @@
           <section class='row align-items-center justify-content-center'>
             <section class="col-md-6 text-center align-self-center">
                 <button
-                    class="btn btn-md"
+                    class="btn btn-sm"
                     data-toggle="modal"
                     data-target="#standardSignup"
                 >
@@ -61,15 +60,12 @@
         id="standardSignup"
         tabindex="-1"
         role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
+        aria-labelledby="standard signup"
         aria-hidden="true"
       >
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">
-                Modal title
-              </h5>
               <button
                 type="button"
                 class="close"
@@ -118,7 +114,7 @@
                   />
                 </div>
                 <br />
-                <input type="submit" value="Sign Up" class="btn btn-primary" />
+                <input type="submit" value="Sign Up" class="btn btn-sm" />
               </form>
             </div>
           </div>
@@ -130,15 +126,12 @@
       id="premiumSignup"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
+      aria-labelledby="premium signup"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">
-              Modal title
-            </h5>
             <button
               type="button"
               class="close"
@@ -196,7 +189,7 @@
                   </div>          
               <br />
               <div id='shop'>
-                    <input type="submit" value="Sign Up" class="btn btn-primary" id='buttonCheckout' />
+                    <input type="submit" value="Sign Up" class="btn btn-sm" id='buttonCheckout' />
               </div>
               <% include ./partials/premiumSignup.ejs %>
             </form>

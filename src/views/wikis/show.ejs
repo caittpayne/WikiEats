@@ -6,7 +6,7 @@
 <body>
     <% include ../static/partials/navbar.ejs %>
     <% include ../static/partials/messages.ejs %>
-    <main class="container-fluid" style='padding-top: 50px'>
+    <main class="container-fluid">
         <section class='row'>
             <section class='col-md-12'>
                 <div class="show-wiki"style='background: url("data:image/jpeg;base64, <%- imageData %> ")'>
@@ -36,30 +36,38 @@
             </section>
         </section>
         <hr>
-        <% if(currentUser && (currentUser.isOwner(currentUser, wiki) || currentUser.isAdmin())) { %>
-            <section class='row'>
-                    <section class='col-sm-4' style='text-align: right'>
+        <% if(currentUser) { %>
+        <% if(wiki.private === true && (currentUser.isOwner(currentUser, wiki) || currentUser.isAdmin())) { %>
+            <section class='row justify-content-center'>
+                    <section class='col-md-2'>
                             <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-sm">Edit</a>
                     </section>
-                    <section class='col-sm-4' style='text-align: center'>
-                        <% if(currentUser.isOwner(currentUser, wiki) || currentUser.isAdmin() ) { %>
+                    <section class='col-md-2'>
                             <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
                                 <button type="submit" class="btn-sm btn">Delete</button>
                             </form>
-                        <% } %>
                     </section>
-                    <section class='col-sm-4' style='text-align: left'>
-                        <% if(wiki.private === true && (currentUser.isOwner(currentUser, wiki) || currentUser.isAdmin())) { %>
-                            <button class="btn btn-sm" data-toggle="modal" data-target="#addCollab">Add Collaborators</button>
-                        <% } %>
+                    <section class='col-md-2'>
+                        <button class="btn btn-sm" data-toggle="modal" data-target="#addCollab">Add Collaborators</button>
                     </section>
                 </section>
-        <% } else if(currentUser) { %>
-            <section class='row'>
-                    <section class='col-sm-12' style='text-align: right'>
+        <% } else if(currentUser.isOwner(currentUser, wiki) || currentUser.isAdmin()) { %>
+            <section class='row justify-content-center'>
+                    <section class='col-md-2'>
+                            <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-sm">Edit</a>
+                    </section>
+                    <section class='col-md-2'>
+                            <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
+                                <button type="submit" class="btn-sm btn">Delete</button>
+                            </form>
+                    </section>
+        <% } else { %>
+            <section class='row justify-content center'>
+                    <section class='col-md-2'>
                             <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-sm">Edit</a>
                     </section>
                 </section>
+        <% } %>
         <% } else { %>
             <section></section>
         <% } %>
