@@ -1,59 +1,55 @@
 module.exports = class ApplicationPolicy {
-    constructor(user, record) {
-        this.user = user;
-        this.record = record;
-    }
+  constructor(user, record) {
+    this.user = user;
+    this.record = record;
+  }
 
-    _isOwner() {
-        if(this.user) {
-            console.log('record ' + this.record.userId + 'user ' + this.user.id)
-            return this.record && (this.record.userId == this.user.id);  
-        }
-        return false;
+  _isOwner() {
+    if (this.user) {
+      return this.record && this.record.userId == this.user.id;
     }
+    return false;
+  }
 
-    _isAdmin() {
-        return this.user && this.user.role == 'admin';
-    }
+  _isAdmin() {
+    return this.user && this.user.role == "admin";
+  }
 
-    _isPremium() {
-        console.log('user role' + this.user.role);
-        return this.user && this.user.role == 'premium';
-    }
+  _isPremium() {
+    return this.user && this.user.role == "premium";
+  }
 
-    _isCollaborator() {
-        let temp = 0;
-        this.record.collaborators.forEach((collab) => {
-  
-          if(collab.userId == this.user.id) {
-              temp++;
-          }
-  
-        });
-        return temp > 0;
-    }
+  _isCollaborator() {
+    let temp = 0;
+    this.record.collaborators.forEach(collab => {
+      if (collab.userId == this.user.id) {
+        temp++;
+      }
+    });
+    return temp > 0;
+  }
 
-    new() {
-        return this.user != null;
-    }
+  new() {
+    return this.user != null;
+  }
 
-    create() {
-        return this.new();
-    }
+  create() {
+    return this.new();
+  }
 
-    show() {
-        return true;
-    }
+  show() {
+    return true;
+  }
 
-    edit() {
-        return this.new();
-    }
+  edit() {
+    return this.new();
+  }
 
-    update() {
-        return this.edit();
-    }
+  update() {
+    return this.edit();
+  }
 
-    destroy() {
-        return this._isOwner() || this._isAdmin();
-    }
-}
+  destroy() {
+    return this._isOwner() || this._isAdmin();
+  }
+};

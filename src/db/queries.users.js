@@ -1,24 +1,21 @@
-const User = require('./models').User;
-const bcrypt = require('bcryptjs');
-const sgMail = require('@sendgrid/mail');
-const Wiki = require('./models').Wiki;
-const Collaborator = require('./models').Collaborator;
+const User = require("./models").User;
+const bcrypt = require("bcryptjs");
+const sgMail = require("@sendgrid/mail");
+const Wiki = require("./models").Wiki;
+const Collaborator = require("./models").Collaborator;
 module.exports = {
+  createUser(newUser, callback) {
+    const salt = bcrypt.genSaltSync();
+    const hashedPassword = bcrypt.hashSync(newUser.password, salt);
 
-    createUser(newUser, callback) {
-        const salt = bcrypt.genSaltSync();
-        const hashedPassword = bcrypt.hashSync(newUser.password, salt);
-
-    
-        return User.create({
-            email: newUser.email,
-            password: hashedPassword,
-            name: newUser.name,
-            role: (newUser.role === 'premium') ? 'premium' : 'standard'
-        })
-        .then((user) => {
-
-          /*  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    return User.create({
+      email: newUser.email,
+      password: hashedPassword,
+      name: newUser.name,
+      role: newUser.role === "premium" ? "premium" : "standard"
+    })
+      .then(user => {
+        /*  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
             const msg = {
                 to: newUser.email,
@@ -30,105 +27,95 @@ module.exports = {
               
               sgMail.send(msg); */
 
-              callback(null, user)
-        })
-        .catch((err) => {
-            callback(err);
-        })
-    },
+        callback(null, user);
+      })
+      .catch(err => {
+        callback(err);
+      });
+  },
 
-    upgradeUser(req, callback) {
-       return User.findById(req.user.id)
-          .then((user) => {
-    
-            if(!user) {
-              return callback('User not found');
-            } else {
-
-                  user.role = 'premium';
-                  user.save()
-                  .then(() => {
-                    callback(null, user);
-                  })
-                  .catch((err) => {
-                    callback(err);
-                  });
-            }
-            
-        });
-    },
-
-
-    downgradeUser(req, callback) {
-        User.findById(req.params.id)
-        .then((user) => {
-            console.log('found user');
-            if(!user) {
-                console.log('no user')
-                callback('User not found');
-            } else {
-                console.log('else invoked')
-                user.role = 'standard';
-                user.save()
-                .then((user) => {
-                    console.log('callback')
-                    callback(null, user);
-                })
-                .catch((err) => {
-                    callback(err);
-                })
-            }
-        })
-        .catch((err) => {
-            callback(err);
-        })
-    },
-
-    getUser(id, callback) {
-        let result = [];
-        User.findById(id)
-        .then((user) => {
-            if(!user) {
-                callback(404);
-            } else {
-                result['user'] = user;
-    
-                Wiki.scope({method: ['lastFiveFor', id]}).all()
-                .then((wikis) => {
-                    result['wikis'] = wikis;
-
-                Collaborator.scope({method: ['allCollaborations', id]}).all()
-                    .then((collaborators) => {
-                        result['collaborators'] = collaborators;
-
-                        callback(null, result);
-                    })
-                    
-                })
-            }
-        });
-      },
-
-      
-    getAllUsers(callback) {
-        User.all()
-        .then((users) => {
-            callback(null, users);
-        })
-        .catch((err) => {
-            callback(err);
-        })
-    },
-
-    getCollabUser(email, callback) {
-        User.findOne({where: {email: email}})
-        .then((user) => {
-            console.log('get collab user ' + user)
+  upgradeUser(req, callback) {
+    return User.findById(req.user.id).then(user => {
+      if (!user) {
+        return callback("User not found");
+      } else {
+        user.role = "premium";
+        user
+          .save()
+          .then(() => {
             callback(null, user);
-        })
-        .catch((err) => {
-            console.log(err)
+          })
+          .catch(err => {
             callback(err);
-        });
-    },
-}
+          });
+      }
+    });
+  },
+
+  downgradeUser(req, callback) {
+    User.findById(req.params.id)
+      .then(user => {
+        if (!user) {
+          callback("User not found");
+        } else {
+          user.role = "standard";
+          user
+            .save()
+            .then(user => {
+              callback(null, user);
+            })
+            .catch(err => {
+              callback(err);
+            });
+        }
+      })
+      .catch(err => {
+        callback(err);
+      });
+  },
+
+  getUser(id, callback) {
+    let result = [];
+    User.findById(id).then(user => {
+      if (!user) {
+        callback(404);
+      } else {
+        result["user"] = user;
+
+        Wiki.scope({ method: ["lastFiveFor", id] })
+          .all()
+          .then(wikis => {
+            result["wikis"] = wikis;
+
+            Collaborator.scope({ method: ["allCollaborations", id] })
+              .all()
+              .then(collaborators => {
+                result["collaborators"] = collaborators;
+
+                callback(null, result);
+              });
+          });
+      }
+    });
+  },
+
+  getAllUsers(callback) {
+    User.all()
+      .then(users => {
+        callback(null, users);
+      })
+      .catch(err => {
+        callback(err);
+      });
+  },
+
+  getCollabUser(email, callback) {
+    User.findOne({ where: { email: email } })
+      .then(user => {
+        callback(null, user);
+      })
+      .catch(err => {
+        callback(err);
+      });
+  }
+};

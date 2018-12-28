@@ -2,35 +2,46 @@
 <html lang="en">
   <% include ./partials/head.ejs %>
   <body>
-        <% include ./partials/navbar.ejs %>
-    <main class="container" style='padding: 0px 20px 0px 20px'>
-        <section class='row' style='margin-bottom: 30px'>
-            <section class='col-sm-12 align-self-left'>
-                <h5>Latest Stories</h5>
-            </section>
+    <% include ./partials/navbar.ejs %>
+    <main class="container" style="padding: 0px 20px 0px 20px">
+      <section class="row" style="margin-bottom: 30px">
+        <section class="col-sm-12 align-self-left">
+          <h5>Latest Stories</h5>
         </section>
-        <section class='row'>
-            <section class='col-sm-12 align-self-left'>
-                <a href='wikis/<%= wikis[wikis.length - 2].id %>'><h4><%= wikis[wikis.length - 2].title %></h4></a>
-                <p class='text-truncate featured-text'><%= wikis[wikis.length - 2].body %></p>
-            </section>
+      </section>
+      <section class="row">
+        <section class="col-sm-12 align-self-left">
+          <a href="wikis/<%= wikis[wikis.length - 2].id %>"
+            ><h4><%= wikis[wikis.length - 2].title %></h4></a
+          >
+          <p class="text-truncate featured-text">
+            <%= wikis[wikis.length - 2].body %>
+          </p>
         </section>
-        <hr>
-        <section class='row'>
-            <section class='col-sm-12 align-self-left'>
-                <a href='wikis/<%= wikis[wikis.length - 3].id %>'><h4><%= wikis[wikis.length - 3].title %></h4></a>
-                <p class='text-truncate featured-text'><%= wikis[wikis.length - 3].body %></p>
-            </section>
+      </section>
+      <hr />
+      <section class="row">
+        <section class="col-sm-12 align-self-left">
+          <a href="wikis/<%= wikis[wikis.length - 3].id %>"
+            ><h4><%= wikis[wikis.length - 3].title %></h4></a
+          >
+          <p class="text-truncate featured-text">
+            <%= wikis[wikis.length - 3].body %>
+          </p>
         </section>
-        <hr>
-        <section class='row'>
-            <section class='col-sm-12 align-self-left'>
-                <a href='wikis/<%= wikis[wikis.length - 4].id %>'><h4><%= wikis[wikis.length - 4].title %></h4></a>
-                <p class='text-truncate featured-text'><%= wikis[wikis.length - 4].body %></p>
-            </section>
+      </section>
+      <hr />
+      <section class="row">
+        <section class="col-sm-12 align-self-left">
+          <a href="wikis/<%= wikis[wikis.length - 4].id %>"
+            ><h4><%= wikis[wikis.length - 4].title %></h4></a
+          >
+          <p class="text-truncate featured-text">
+            <%= wikis[wikis.length - 4].body %>
+          </p>
         </section>
+      </section>
     </main>
     <% include ./partials/baseScripts.ejs %>
   </body>
 </html>
-

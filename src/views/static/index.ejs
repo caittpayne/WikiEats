@@ -1,44 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <% include ./partials/head.ejs %>
-</head>
+  </head>
   <% include ./partials/navbar.ejs %>
   <body>
-    <main class="container-fluid" style='padding-top: 100px'>
-        <% include ./partials/messages.ejs %>
-        <% if(currentUser) { %>
-            <section class='container'>
-                <section class='row'>
-                    <section class='col-md-8'>
-                        <% include ./featuredWiki.ejs %>
-                    </section>
-                    <section class='col-md-4'>
-                        <% include ./textWikis.ejs %>
-                    </section>
-                </section>
-            </section>
-        <% } else { %>
-            <section class='container-fluid'>
-                    <section class='row align-items-center justify-content-center main'>
-                            <section class='col-md-5 text-center align-self-center'>
-                                <h4 class=''>
-                                    A space to create, collaborate, and share memorable food experiences around the world.
-                                </h4>
-                                <a href='../users/signup'><button class='btn btn-sm'>Sign Up</button></a>
-                            </section>
-                        </section>
-            </section>
-         
-        <% } %>
-        
-        <section class='container-fluid search'>
-            <section class='container'>
-                    <% include ./listWikis.ejs %>  
-            </section>      
-        </section>               
+    <main class="container-fluid" style="padding-top: 100px">
+      <% include ./partials/messages.ejs %> <% if(currentUser) { %>
+      <section class="container">
+        <section class="row">
+          <section class="col-md-8"><% include ./featuredWiki.ejs %></section>
+          <section class="col-md-4"><% include ./textWikis.ejs %></section>
+        </section>
+      </section>
+      <% } else { %>
+      <section class="container-fluid">
+        <section class="row align-items-center justify-content-center main">
+          <section class="col-md-5 text-center align-self-center">
+            <h4 class="">
+              A space to create, collaborate, and share memorable food
+              experiences around the world.
+            </h4>
+            <a href="../users/signup"
+              ><button class="btn btn-sm">Sign Up</button></a
+            >
+          </section>
+        </section>
+      </section>
+
+      <% } %>
+
+      <section class="container-fluid search">
+        <section class="container"><% include ./listWikis.ejs %></section>
+      </section>
     </main>
     <% include ./partials/baseScripts.ejs %>
   </body>
 </html>
-

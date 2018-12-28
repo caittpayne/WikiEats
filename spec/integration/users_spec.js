@@ -110,8 +110,6 @@ describe("routes : users", () => {
     });
   });
 
-  // NEED TO UPDATE
-
   describe("GET /users/:id", () => {
     beforeEach(done => {
       this.user;
@@ -163,8 +161,8 @@ describe("routes : users", () => {
     describe("POST /users/:id/upgrade", () => {
       it("should not upgrade the users account to premium without Stripe payment", done => {
         request.get(`${base}${this.user.id}/upgrade`, (err, res, body) => {
-            expect(this.user.role).toBe('standard');
-            done();
+          expect(this.user.role).toBe("standard");
+          done();
         });
       });
     });
