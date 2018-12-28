@@ -6,9 +6,7 @@
   <section class="container-fluid">
     <section class="row">
       <section class="col-sm-8">
-        <a href="users/<%= collaborator.userId %>">
           <%= collaborator.name %>
-        </a>
       </section>
       <section class="col-md-4">
         <% if(currentUser.isAdmin() || currentUser.isOwner(currentUser, wiki)) {
