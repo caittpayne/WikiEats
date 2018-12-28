@@ -20,7 +20,9 @@ module.exports = {
       if (err) {
         res.redirect(500, "/");
       } else {
-        res.render("wikis/index", { publicWikis, privateWikis });
+          console.log('public' + publicWikis.length);
+          console.log('private' + privateWikis.length);
+        res.render("wikis/index", {publicWikis, privateWikis});
       }
     });
   },
@@ -101,15 +103,8 @@ module.exports = {
           req.flash("notice", "You are not authorized to view this wiki");
           res.redirect("/wikis");
         }
-      } else {
-        if (wiki.images[0]) {
-          res.render("wikis/show", {
-            wiki,
-            html: markdown.toHTML(wiki.body),
-            Buffer
-          });
-        }
-        res.render("wikis/show", { wiki, html: markdown.toHTML(wiki.body) });
+      } else {      
+        res.render("wikis/show", { wiki, html: markdown.toHTML(wiki.body), Buffer });
       }
     });
   },

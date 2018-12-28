@@ -8,6 +8,7 @@
     <% include ../static/partials/messages.ejs %>
     <main class="container" style='padding-top: 100px'>
         <section class='row'>
+                    <% if(currentUser) { %>
                         <h5>Private Wikis & Collaborations:</h5>
                         <% var array = [] %>
                         <% privateWikis.forEach((wiki) => { %>
@@ -22,7 +23,7 @@
                             </section>
                             <section class='row'>
                                     <section class='col-md-4'>
-                                        <a href='wikis/<%= array[i].id %>'>
+                                        <a href='/wikis/<%= array[i].id %>'>
                                             <div class="list-wiki"style='background: url("data:image/jpeg;base64, <%= Buffer.from(array[i].images[0].data).toString('base64') %> ")'>
                                                 <div class='overlay'>
                                                     <div class='list-wiki-text'><h5><%= array[i].title %></h5></div>
@@ -34,7 +35,7 @@
                                 </section>
                             <% } else { %>
                                         <section class='col-md-4'>
-                                            <a href='wikis/<%= array[i].id %>'>
+                                            <a href='/wikis/<%= array[i].id %>'>
                                                 <div class="list-wiki"style='background: url("data:image/jpeg;base64, <%= Buffer.from(array[i].images[0].data).toString('base64') %> ")'>
                                                     <div class='overlay'>
                                                         <div class='list-wiki-text'><h5><%= array[i].title %></h5></div>
@@ -53,7 +54,7 @@
                     </section>
                     <section class='row'>
                             <section class='col-md-4'>
-                                <a href='wikis/<%= publicWikis[i].id %>'>
+                                <a href='/wikis/<%= publicWikis[i].id %>'>
                                     <div class="list-wiki"style='background: url("data:image/jpeg;base64, <%= Buffer.from(publicWikis[i].images[0].data).toString('base64') %> ")'>
                                         <div class='overlay'>
                                             <div class='list-wiki-text'><h5><%= publicWikis[i].title %></h5></div>
@@ -65,7 +66,7 @@
                         </section>
                     <% } else { %>
                                 <section class='col-md-4'>
-                                    <a href='wikis/<%= publicWikis[i].id %>'>
+                                    <a href='/wikis/<%= publicWikis[i].id %>'>
                                         <div class="list-wiki"style='background: url("data:image/jpeg;base64, <%= Buffer.from(publicWikis[i].images[0].data).toString('base64') %> ")'>
                                             <div class='overlay'>
                                                 <div class='list-wiki-text'><h5><%= publicWikis[i].title %></h5></div>
@@ -74,7 +75,8 @@
                                     </a>       
                             </section>
                     <% } %>
-       
+    
+                <% } %>   
         </section>
     </main>
     <% include ../static/partials/baseScripts.ejs %>

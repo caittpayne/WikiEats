@@ -9,8 +9,8 @@
           <%= collaborator.name %>
       </section>
       <section class="col-md-4">
-        <% if(currentUser.isAdmin() || currentUser.isOwner(currentUser, wiki)) {
-        %>
+            <% if(currentUser.isAdmin() || currentUser.isOwner(currentUser, wiki)) {
+                %>
         <form
           action="<%= wiki.id %>/collaborators/<%= collaborator.id %>/destroy"
           method="post"
@@ -19,7 +19,7 @@
             <i class="fas fa-minus-circle"></i>
           </button>
         </form>
-        <% } %>
+       <% } %>
       </section>
     </section>
   </section>
