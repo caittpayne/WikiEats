@@ -95,7 +95,7 @@ module.exports = {
           res.render("wikis/show", {
             wiki,
             html: markdown.toHTML(wiki.body),
-            imageData: Buffer.from(wiki.images[0].data).toString("base64")
+            Buffer
           });
         } else {
           req.flash("notice", "You are not authorized to view this wiki");
@@ -106,7 +106,7 @@ module.exports = {
           res.render("wikis/show", {
             wiki,
             html: markdown.toHTML(wiki.body),
-            imageData: Buffer.from(wiki.images[0].data).toString("base64")
+            Buffer
           });
         }
         res.render("wikis/show", { wiki, html: markdown.toHTML(wiki.body) });
