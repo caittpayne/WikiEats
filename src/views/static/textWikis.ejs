@@ -3,6 +3,7 @@
   <% include ./partials/head.ejs %>
   <body>
     <% include ./partials/navbar.ejs %>
+    <% if(wikis) { %>
     <main class="container" style="padding: 0px 20px 0px 20px">
       <section class="row" style="margin-bottom: 30px">
         <section class="col-sm-12 align-self-left">
@@ -42,6 +43,7 @@
         </section>
       </section>
     </main>
+    <% } %>
     <% include ./partials/baseScripts.ejs %>
   </body>
 </html>

@@ -5,8 +5,10 @@
   </head>
   <% include ./partials/navbar.ejs %>
   <body>
+    <% if(wikis) { %>
     <main class="container-fluid" style="padding-top: 100px">
-      <% include ./partials/messages.ejs %> <% if(currentUser) { %>
+    <% include ./partials/messages.ejs %>
+    <% if(currentUser) { %>
       <section class="container">
         <section class="row">
           <section class="col-md-8"><% include ./featuredWiki.ejs %></section>
@@ -29,11 +31,12 @@
       </section>
 
       <% } %>
-
       <section class="container-fluid search">
-        <section class="container"><% include ./listWikis.ejs %></section>
-      </section>
+            <section class="container"><% include ./listWikis.ejs %></section>
+        </section>
     </main>
+    <% } %>
+        <section></section>
     <% include ./partials/baseScripts.ejs %>
   </body>
 </html>
