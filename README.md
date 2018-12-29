@@ -6,7 +6,7 @@
 
 <hr>
 
-WikiEats is a space to create, collaborate, and share memorable food experiences around the world. It was inspired by my love for traveling and sharing delicious meals with new firends along the way. 
+WikiEats is a space to create, collaborate, and share memorable food experiences around the world. It was inspired by my love for traveling and sharing delicious meals with new friends along the way. 
 
 Features include the option for users to upgrade to paid accounts, where they have the ability to create private wikis and grant collaborators permission to edit the wikis. In creating wikis, users use markdown to format their stories and upload an image to compliment their experience. 
 
