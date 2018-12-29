@@ -10,7 +10,7 @@ WikiEats is a space to create, collaborate, and share memorable food experiences
 
 Features include the option for users to upgrade to paid accounts, where they have the ability to create private wikis and grant collaborators permission to edit the wikis. In creating wikis, users use markdown to format their stories and upload an image to compliment their experience. 
 
-You can check out the live site <a href='https://caittpayne-wiki-node.herokuapp.com/'>here</a>. 
+You can check out the live site <a href='https://caittpayne-wiki-node.herokuapp.com/' target='_blank'>here</a>. 
 
 ## Appearance <a id="appearance"></a>
 
